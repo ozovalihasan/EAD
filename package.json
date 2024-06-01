@@ -7,7 +7,7 @@
     "dev": "vite",
     "test": "jest --watch --silent=false --maxWorkers=1",
     "test:silent": "jest --watch --maxWorkers=1",
-    "test:one": "jest --silent=false --maxWorkers=1",
+    "test:one": "jest --silent=false --maxWorkers=1 --coverage",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "eslint:fix": "eslint . --fix"
