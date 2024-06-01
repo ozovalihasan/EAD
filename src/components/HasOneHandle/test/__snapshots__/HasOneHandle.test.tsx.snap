@@ -17,7 +17,7 @@ Object {
           />
         </svg>
         MockCustomHandle
-        handleType: has_one
+        handleType: hasOne
         nodeId: 1
         id: bottom1
       </div>
@@ -36,7 +36,7 @@ Object {
         />
       </svg>
       MockCustomHandle
-      handleType: has_one
+      handleType: hasOne
       nodeId: 1
       id: bottom1
     </div>

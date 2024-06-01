@@ -10,10 +10,10 @@ beforeEach(() => {
 });
 
 describe('<HasManyHandle />', () => {
-  it('calls another component with a prop with value "has_many"', () => {
+  it('calls another component with a prop with value "hasMany"', () => {
     render(renderReadyComponent);
     expect(screen.getByText(/MockCustomHandle/i)).toBeInTheDocument();
-    expect(screen.getByText(/has_many/i)).toBeInTheDocument();
+    expect(screen.getByText(/hasMany/i)).toBeInTheDocument();
   });
   
 

@@ -8,7 +8,7 @@ beforeEach(() => {
   
   useStore.setState({ 
     isConnectContinue: false,
-    associationType: "has_many",
+    associationType: "hasMany",
     connectionStartNodeId: "111",
     onMouseEnterThrough: jest.fn(), 
   })

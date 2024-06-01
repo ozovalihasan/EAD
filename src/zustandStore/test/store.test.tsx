@@ -55,8 +55,8 @@ describe('store', () => {
 
   });
 
-  it('has an "associationType" attribute and its value should be "has_one" as default', () => {
-    expect(useStore.getState().associationType).toBe("has_one");
+  it('has an "associationType" attribute and its value should be "hasOne" as default', () => {
+    expect(useStore.getState().associationType).toBe("hasOne");
   });
 
   it('has a "nodes" attribute and its value should exist as default', () => {
@@ -416,7 +416,7 @@ describe('store', () => {
       it('"hasOne" edge', () => {
 
         useStore.setState({
-          associationType: "has_one",
+          associationType: "hasOne",
         })
         
         expect(useStore.getState().edges.length).toBe(3);
@@ -443,7 +443,7 @@ describe('store', () => {
       it('a "hasMany" edge', () => {
 
         useStore.setState({
-          associationType: "has_many",
+          associationType: "hasMany",
         })
         
 
@@ -503,9 +503,9 @@ describe('store', () => {
 
   it('has an "onChangeAssociationType" attribute to change the selected association type', () => {
     
-      useStore.getState().onChangeAssociationType( "mockAssociationType", "666")
+      useStore.getState().onChangeAssociationType( "hasOne", "666")
     
-      expect(useStore.getState().associationType).toBe("mockAssociationType");
+      expect(useStore.getState().associationType).toBe("hasOne");
       expect(useStore.getState().connectionStartNodeId).toBe("666");
   });
 

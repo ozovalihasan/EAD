@@ -34,7 +34,7 @@ beforeEach(() => {
     <CustomHandle 
       id={"111"}
       nodeId={"222"}
-      handleType={"mockHandleType"}
+      handleType={'hasMany'}
     />
   );
 });

@@ -30,7 +30,7 @@ beforeEach(() => {
   useStore.setState({ 
     isConnectContinue: false,
     connectionStartNodeId: "111",
-    associationType: "has_many",
+    associationType: "hasMany",
     selectedNodeIdForThrough: "111"
   })
   
