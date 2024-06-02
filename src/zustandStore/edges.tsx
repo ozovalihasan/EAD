@@ -1,8 +1,8 @@
-import { 
-  CustomEdgeType, 
-  hasManyEdgePartial, 
-  hasOneEdgePartial, 
-  throughEdgePartial 
+import {
+  CustomEdgeType,
+  hasManyEdgePartial,
+  hasOneEdgePartial,
+  throughEdgePartial
 } from "@/zustandStore";
 
 const initialEdges: CustomEdgeType[] = [
@@ -41,7 +41,7 @@ const initialEdges: CustomEdgeType[] = [
     "data": {
         "throughNodeId": "5"
     }
-  }  
+  }
 ];
 
 export default initialEdges

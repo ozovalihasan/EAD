@@ -18,7 +18,7 @@ const initialNodes: EntityNodeType[] = [
     ...entityNodePartial,
     "position": {
         "x": 585,
-        "y": 255
+        "y": 315
     },
     "data": {
         "tableId": "2",
