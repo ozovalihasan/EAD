@@ -10,7 +10,7 @@ Object {
         style="width: 204px;"
       >
         <div
-          class="transition-all py-2 "
+          class="transition-all py-2  "
           draggable="true"
         >
           <div
@@ -46,7 +46,7 @@ Object {
           </div>
         </div>
         <div
-          class="transition-all py-2 "
+          class="transition-all py-2  "
           draggable="true"
         >
           <div
@@ -81,7 +81,12 @@ Object {
             </div>
           </div>
         </div>
-        MockAddTableButton
+        <div
+          class="flex justify-between "
+        >
+          MockAddTableButton
+          ReorderAllTablesButton
+        </div>
       </aside>
     </div>
   </body>,
@@ -91,7 +96,7 @@ Object {
       style="width: 204px;"
     >
       <div
-        class="transition-all py-2 "
+        class="transition-all py-2  "
         draggable="true"
       >
         <div
@@ -127,7 +132,7 @@ Object {
         </div>
       </div>
       <div
-        class="transition-all py-2 "
+        class="transition-all py-2  "
         draggable="true"
       >
         <div
@@ -162,7 +167,12 @@ Object {
           </div>
         </div>
       </div>
-      MockAddTableButton
+      <div
+        class="flex justify-between "
+      >
+        MockAddTableButton
+        ReorderAllTablesButton
+      </div>
     </aside>
   </div>,
   "debug": [Function],
@@ -229,7 +239,7 @@ Object {
         style="width: 204px;"
       >
         <div
-          class="transition-all py-2 "
+          class="transition-all py-2  "
           draggable="true"
         >
           <div
@@ -265,7 +275,7 @@ Object {
           </div>
         </div>
         <div
-          class="transition-all py-2 "
+          class="transition-all py-2  "
           draggable="true"
         >
           <div
@@ -300,7 +310,12 @@ Object {
             </div>
           </div>
         </div>
-        MockAddTableButton
+        <div
+          class="flex justify-between "
+        >
+          MockAddTableButton
+          ReorderAllTablesButton
+        </div>
       </aside>
     </div>
   </body>,
@@ -310,7 +325,7 @@ Object {
       style="width: 204px;"
     >
       <div
-        class="transition-all py-2 "
+        class="transition-all py-2  "
         draggable="true"
       >
         <div
@@ -346,7 +361,7 @@ Object {
         </div>
       </div>
       <div
-        class="transition-all py-2 "
+        class="transition-all py-2  "
         draggable="true"
       >
         <div
@@ -381,7 +396,12 @@ Object {
           </div>
         </div>
       </div>
-      MockAddTableButton
+      <div
+        class="flex justify-between "
+      >
+        MockAddTableButton
+        ReorderAllTablesButton
+      </div>
     </aside>
   </div>,
   "debug": [Function],

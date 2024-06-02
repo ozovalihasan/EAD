@@ -1,13 +1,13 @@
 import { DragDirection, useStore } from '@/zustandStore';
 import { useCustomizationStore } from '@/zustandStore/customizationStore';
 import { MinusSign } from '@/icons';
-import { AddTableButton, SidebarOptions, TableAttributes } from '@/components';
+import { AddTableButton, ReorderAllTablesButton, SidebarOptions, TableAttributes } from '@/components';
 import { useState } from 'react';
 
 export const Sidebar = () => {
   const tables = useStore((state) => state.tables);
   const orderedTables = useStore((state) => state.orderedTables);
-  
+
 
   const onTableNameChange = useStore((store) => store.onTableNameChange);
   const removeTable = useStore((store) => store.removeTable);
@@ -26,12 +26,12 @@ export const Sidebar = () => {
   const isNotDragged = (tableId: string) => draggedId !== tableId;
   const isDraggedOver = (tableId: string) => draggedOverId === tableId;
 
-  const disableSortTableMode = () => {  
+  const disableSortTableMode = () => {
     setDraggedOverId(null);
     setSortTableMode(false);
   }
 
-  const endDragging = () => {  
+  const endDragging = () => {
     setDraggedId(null);
     disableSortTableMode();
   }
@@ -41,7 +41,7 @@ export const Sidebar = () => {
     nodeType: string,
     tableId: string,
   ) => {
-    
+
 
     event.dataTransfer.setData('application/reactflow', nodeType);
     event.dataTransfer.setData('tableId', tableId);
@@ -54,7 +54,7 @@ export const Sidebar = () => {
 
   const onDragOver = (event: React.DragEvent<HTMLDivElement>, tableId: string) => {
     event.preventDefault();
-     
+
     if (draggedId && (draggedId !== tableId)) {
       setSortTableMode(true);
       setDraggedOverId(tableId);
@@ -67,7 +67,7 @@ export const Sidebar = () => {
     const draggedTableId = event.dataTransfer.getData('tableId');
 
     if (type !== 'default') { return; }
-    
+
     endDragging()
 
     if (draggedTableId !== tableId) {
@@ -87,6 +87,7 @@ export const Sidebar = () => {
       style={{ width: widthSidebar }}
     >
       {orderedTables.map((tableId) => {
+        const table = tables[tableId];
         const isCurrentTableDragged = isDragged(tableId);
         const isCurrentTableDraggedOver = isDraggedOver(tableId);
         const isCurrentTableUpperDraggedOver = draggedDirection === DragDirection.upper && isCurrentTableDraggedOver;
@@ -94,7 +95,7 @@ export const Sidebar = () => {
 
         return (
           <div
-            className={`transition-all py-2 ${sortTableMode && isCurrentTableDragged ? 'hidden' : ''}`}
+            className={`transition-all py-2 ${sortTableMode && isCurrentTableDragged ? 'hidden' : ''} ${table.superclassId ? 'pl-4' : ''}`}
             onDragStart={(event) => onDragStart(event, 'default', tableId)}
             onDrop={(event) => onDrop(event, tableId)}
             onDragOver={(event) => isNotDragged(tableId) && onDragOver(event, tableId)}
@@ -108,7 +109,7 @@ export const Sidebar = () => {
 
             <div className={`w-full bg-transparent border-2 general-border rounded-md group pb-2 relative`}>
               {
-                sortTableMode && 
+                sortTableMode &&
                   <>
                     <div title='Drag over to locate above' className={`absolute top-0 left-0 w-full h-1/2 z-20`} onDragOver={() => setDraggedDirection(DragDirection.upper)} />
                     <div title='Drag over to locate below' className={`absolute top-1/2 left-0 w-full h-1/2 z-20`} onDragOver={() => setDraggedDirection(DragDirection.lower)} />
@@ -147,8 +148,10 @@ export const Sidebar = () => {
         );
       })}
 
-      <AddTableButton />
+      <div className='flex justify-between '>
+        <AddTableButton />
+        <ReorderAllTablesButton />
+      </div>
     </aside>
   );
 };
-

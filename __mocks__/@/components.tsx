@@ -1,12 +1,12 @@
 import React from "react";
-import { 
-  CustomHandleType, 
-  HasAnyEdgePropsType, 
-  MarkerBaseType, 
-  MarkerType, 
-  RemoveEdgeButtonType, 
-  ShowEdgeTextType, 
-  SidebarOptionsType, 
+import {
+  CustomHandleType,
+  HasAnyEdgePropsType,
+  MarkerBaseType,
+  MarkerType,
+  RemoveEdgeButtonType,
+  ShowEdgeTextType,
+  SidebarOptionsType,
   ToggleOptionalButtonType,
   TableOptionsType
 } from "../../src/components"
@@ -20,9 +20,9 @@ export const AttributeTypeOptions = () => (
 export const SidebarOptions = (props: SidebarOptionsType) => (
   <>
     MockSidebarOptions
-    { 
+    {
       Object.keys(props)
-        .map((key) => `${key}: ${props[key as keyof typeof props]}`) 
+        .map((key) => `${key}: ${props[key as keyof typeof props]}`)
     }
   </>
 )
@@ -154,7 +154,7 @@ export const ToggleOptionalButton = (
 )
 
 export const ShowEdgeText = (
-  ({label, ...rest}: ShowEdgeTextType ) => ( 
+  ({label, ...rest}: ShowEdgeTextType ) => (
     <>
       MockShowEdgeText
       { Object.keys(rest).map((key) => `${key}: ${rest[key as keyof typeof rest]}`) }
@@ -165,7 +165,7 @@ export const ShowEdgeText = (
 
 
 export const CustomHandle = (props: CustomHandleType) => {
-  
+
   return (
     <>
       MockCustomHandle
@@ -176,7 +176,7 @@ export const CustomHandle = (props: CustomHandleType) => {
 
 export const HasAnyEdge = (
   (
-    props: HasAnyEdgePropsType 
+    props: HasAnyEdgePropsType
   ) => (
     <>
       MockHasAnyEdge
@@ -298,4 +298,10 @@ export const SelectThroughNode =(
   )
 )
 
-    
+export const ReorderAllTablesButton =(
+  () => (
+    <>
+      ReorderAllTablesButton
+    </>
+  )
+)

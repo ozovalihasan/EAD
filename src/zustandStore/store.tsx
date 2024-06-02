@@ -22,7 +22,7 @@ import { HasManyEdgePartialType, HasOneEdgePartialType, ThroughEdgePartialType, 
 import { createOrderedTables, entityNodePartial, hasManyEdgePartial, hasOneEdgePartial, throughEdgePartial } from '@/zustandStore';
 
 export const initialIdCounter = (initialTables: TablesType, initialNodes: Node[], initialEdges: Edge[]): number => {
-  
+
   let ids = ["0"]
   ids = ids.concat(Object.keys(initialTables))
   Object.keys(initialTables).map(( tableId )=> ids = ids.concat( Object.keys(initialTables[tableId].attributes)))
@@ -30,8 +30,8 @@ export const initialIdCounter = (initialTables: TablesType, initialNodes: Node[]
   ids = ids.concat(Object.keys(initialEdges))
 
   const integer_ids = ids.map(id => parseInt(id))
-  const max = Math.max( ...integer_ids ) 
-  
+  const max = Math.max( ...integer_ids )
+
   return (max + 1)
 }
 
@@ -89,8 +89,8 @@ export interface State {
   mouseOnNodeId: string | null;
   associationType: CustomEdgeType["type"];
   needFitView: boolean,
-  onNodeMouseEnter: (_: React.MouseEvent, node: Node) => void; 
-  onEdgeMouseEnter: (_: React.MouseEvent, edge: Edge) => void; 
+  onNodeMouseEnter: (_: React.MouseEvent, node: Node) => void;
+  onEdgeMouseEnter: (_: React.MouseEvent, edge: Edge) => void;
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
@@ -116,11 +116,12 @@ export interface State {
   uploadStore: (event: React.ChangeEvent<HTMLInputElement>) => void;
   toggleNeedFitView: () => void;
   moveTable: (draggedTableId: string, tableId: string, dragDirection: DragDirection) => void;
+  reorderAllTables: () => void;
   toggleOptional: (edgeId: string) => void;
 }
 
 export const useStore = create(devtools<State>((set, get) => ({
-    version: "0.4.7",  
+    version: "0.4.7",
     idCounter: initialIdCounter(initialTables, initialNodes, initialEdges) ,
     associationType: hasOneEdgePartial.type as CustomEdgeType['type'],
 
@@ -178,7 +179,7 @@ export const useStore = create(devtools<State>((set, get) => ({
       set({
         isMouseOnNode: false,
         mouseOnNodeId: null
-      })  
+      })
     }),
 
     onTableNameChange: ((event: React.ChangeEvent<HTMLInputElement>, tableId: string) => {
@@ -243,17 +244,17 @@ export const useStore = create(devtools<State>((set, get) => ({
         state.nodes = state.nodes.filter((node) => {
           state.edges = state.edges.filter((edge: CustomEdgeType) => (
 
-            node.data.tableId !== tableId || 
+            node.data.tableId !== tableId ||
             (
-              (edge.source !== node.id) && 
-              (edge.target !== node.id) && 
+              (edge.source !== node.id) &&
+              (edge.target !== node.id) &&
               (edge.type !== "through" || (edge as ThroughEdgeType).data?.throughNodeId !== node.id)
             )
-            
+
           ))
           return (node.data.tableId !== tableId)
         })
-        
+
         Object.values(state.tables).forEach(table => {
           if (table.superclassId === tableId){
             table.superclassId = ""
@@ -278,7 +279,7 @@ export const useStore = create(devtools<State>((set, get) => ({
     }),
 
     onNodeInputChange: (event: React.ChangeEvent<HTMLInputElement>, nodeId: string) =>{
-      
+
       set(produce((state: State) => {
         const node: EntityNodeType = (state.nodes.find(node => node.id === nodeId))!
         node.data.name = event.target.value
@@ -296,7 +297,7 @@ export const useStore = create(devtools<State>((set, get) => ({
       if (changes[0].type === "remove"){
         edges = get().edges.filter((edge) => edge.type !== 'through' || (edge as ThroughEdgeType).data?.throughNodeId !== (changes[0] as NodeRemoveChange).id)
       }
-      
+
       set({
         nodes: applyNodeChanges(changes, get().nodes) as EntityNodeType[],
         edges: edges,
@@ -304,11 +305,11 @@ export const useStore = create(devtools<State>((set, get) => ({
     },
 
     onEdgesChange: (changes: EdgeChange[]) => {
-      
+
       set({
         edges: applyEdgeChanges<HasOneEdgeDataType | HasManyEdgeDataType | ThroughEdgeDataType>(changes, get().edges) as CustomEdgeType[],
       });
-      
+
     },
 
     onMouseEnterThrough: (nodeId: string) => {
@@ -319,23 +320,23 @@ export const useStore = create(devtools<State>((set, get) => ({
 
     onConnect: (connection: Connection) => {
       const id = get().idCounter
-      const edgeBase: Omit<CustomEdgeType, "label" | "type" | "data"> = {       
-        id: id.toString(), 
-        source: connection.source!, 
-        target: connection.target!, 
+      const edgeBase: Omit<CustomEdgeType, "label" | "type" | "data"> = {
+        id: id.toString(),
+        source: connection.source!,
+        target: connection.target!,
         sourceHandle: connection.sourceHandle,
         targetHandle: connection.targetHandle,
       }
-   
+
       const addEdge = (edge: CustomEdgeType) => set({
         edges: get().edges.concat(edge),
         idCounter: get().idCounter + 1,
         selectedNodeIdForThrough: null,
       })
-      
+
       if (get().associationType === hasOneEdgePartial.type){
-        
-        const edge: HasOneEdgeType = { 
+
+        const edge: HasOneEdgeType = {
           ...edgeBase,
           ...hasOneEdgePartial,
           data:{
@@ -346,7 +347,7 @@ export const useStore = create(devtools<State>((set, get) => ({
         addEdge(edge)
 
       } else if (get().associationType === hasManyEdgePartial.type) {
-        const edge: HasManyEdgeType = { 
+        const edge: HasManyEdgeType = {
           ...edgeBase,
           ...hasManyEdgePartial,
           data:{
@@ -355,19 +356,19 @@ export const useStore = create(devtools<State>((set, get) => ({
         }
 
         addEdge(edge)
-        
+
       } else {
         const selectedNodeIdForThrough = get().selectedNodeIdForThrough
         if (selectedNodeIdForThrough === null){
           alert("It is necessary to select a node to define through association.");
-          return 
+          return
         }
-        
-        const edge: ThroughEdgeType = { 
+
+        const edge: ThroughEdgeType = {
           ...edgeBase,
           ...throughEdgePartial,
           data: {
-            throughNodeId: get().selectedNodeIdForThrough! 
+            throughNodeId: get().selectedNodeIdForThrough!
           },
         }
 
@@ -375,7 +376,7 @@ export const useStore = create(devtools<State>((set, get) => ({
 
       }
     },
-   
+
     onChangeAssociationType: (associationType, id) =>{
       set({
         associationType: associationType,
@@ -411,9 +412,9 @@ export const useStore = create(devtools<State>((set, get) => ({
       }
 
       const index: number = edges.indexOf(edge);
-      
+
       set(produce((state: State) => {
-        
+
         (state.edges[index] as HasAnyEdgeType).data.optional = !edge.data.optional
       }))
     },
@@ -421,11 +422,12 @@ export const useStore = create(devtools<State>((set, get) => ({
     moveTable: (draggedTableId, droppedTableId, dragDirection) => {
       set(produce((state: State) => {
         let orderedTables = state.orderedTables;
-      
+
         const draggedTableIndex = orderedTables.findIndex((tableId) => tableId === draggedTableId);
         orderedTables.splice(draggedTableIndex, 1);
-        
+
         const droppedTableIndex = orderedTables.findIndex((tableId) => tableId === droppedTableId);
+
         if (dragDirection === DragDirection.upper){
           orderedTables.splice(droppedTableIndex, 0, draggedTableId);
         } else {
@@ -436,37 +438,45 @@ export const useStore = create(devtools<State>((set, get) => ({
       }))
     },
 
+    reorderAllTables: () => {
+      const tables = get().tables
+      const moveTable = get().moveTable
+      Object.keys(get().tables).map((checkedTableId: string) => {
+        if (tables[checkedTableId].superclassId === ""){ return }
+
+        moveTable(checkedTableId, tables[checkedTableId].superclassId, DragDirection.lower)
+      })
+    },
+
     uploadStore: (event: React.ChangeEvent<HTMLInputElement>) => {
       const fileReader = new FileReader();
       fileReader.onload = (event) => {
         let data: State;
         if (event.target && (typeof event.target.result === 'string')){
           data = JSON.parse(event.target.result) as State;
-          
+
           if (["0.4.0", "0.4.1", "0.4.2", "0.4.3", "0.4.4", "0.4.5", "0.4.6", "0.4.7"].includes(data.version)) {
-            
+
             set(
               update_data(data)
-            ) 
+            )
 
             set({
               needFitView: true
             })
           } else {
-            alert(`The version of your file is v${data.version}. It is not compatible with the version used(v0.4.7).`);  
+            alert(`The version of your file is v${data.version}. It is not compatible with the version used(v0.4.7).`);
           }
-          
+
         }else{
           alert("An invalid file is installed. Please check your file.");
         }
-        
-      
+
+
       };
-  
+
       fileReader.readAsText((event.target.files!)[0], 'UTF-8');
     }
-    
+
   })
 ));
-
-
