@@ -83,8 +83,8 @@ export const Sidebar = () => {
 
   return (
     <aside
-      className={`h-full relative py-4 px-2 overflow-y-scroll ${sidebarVisible ? '' : 'hidden'}`}
-      style={{ width: widthSidebar }}
+      className={`h-full relative py-4 px-2 overflow-y-auto ${sidebarVisible ? '' : 'hidden'}`}
+      style={{ width: widthSidebar}}
     >
       {orderedTables.map((tableId) => {
         const table = tables[tableId];

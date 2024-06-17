@@ -5,7 +5,7 @@ export type TableOptionsType = {nodeId: string, tableId: string};
 export const TableOptions = ({nodeId, tableId}: TableOptionsType) => {
 
   const onNodeTableChange = useStore((state) => state.onNodeTableChange);
-  
+
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     onNodeTableChange(event.target.value, nodeId)
   }
@@ -15,15 +15,15 @@ export const TableOptions = ({nodeId, tableId}: TableOptionsType) => {
       onNodeTableChange((event.target as HTMLOptionElement).value, nodeId)
     }
   }
-  
+
   const tables = useStore((state) => state.tables);
   const options = Object.entries(tables).map(([id, table]) => {return {id: id, name: table.name}});
-  
+
   return (
     <select
-      className="absolute bottom-full left-0  custom-select-options"
+      className="absolute bottom-full left-0 custom-select-options overflow-auto"
       value={tableId}
-      onClick={handleClick} 
+      onClick={handleClick}
       onChange={handleChange}
       autoFocus
       size={options.length}

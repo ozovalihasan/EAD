@@ -6,7 +6,7 @@ Object {
   "baseElement": <body>
     <div>
       <select
-        class="absolute bottom-full left-0  custom-select-options"
+        class="absolute bottom-full left-0 custom-select-options overflow-auto"
         size="2"
       >
         <option
@@ -26,7 +26,7 @@ Object {
   </body>,
   "container": <div>
     <select
-      class="absolute bottom-full left-0  custom-select-options"
+      class="absolute bottom-full left-0 custom-select-options overflow-auto"
       size="2"
     >
       <option

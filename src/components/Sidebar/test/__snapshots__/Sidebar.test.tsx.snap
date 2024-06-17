@@ -6,7 +6,7 @@ Object {
   "baseElement": <body>
     <div>
       <aside
-        class="h-full relative py-4 px-2 overflow-y-scroll hidden"
+        class="h-full relative py-4 px-2 overflow-y-auto hidden"
         style="width: 204px;"
       >
         <div
@@ -92,7 +92,7 @@ Object {
   </body>,
   "container": <div>
     <aside
-      class="h-full relative py-4 px-2 overflow-y-scroll hidden"
+      class="h-full relative py-4 px-2 overflow-y-auto hidden"
       style="width: 204px;"
     >
       <div
@@ -235,7 +235,7 @@ Object {
   "baseElement": <body>
     <div>
       <aside
-        class="h-full relative py-4 px-2 overflow-y-scroll "
+        class="h-full relative py-4 px-2 overflow-y-auto "
         style="width: 204px;"
       >
         <div
@@ -321,7 +321,7 @@ Object {
   </body>,
   "container": <div>
     <aside
-      class="h-full relative py-4 px-2 overflow-y-scroll "
+      class="h-full relative py-4 px-2 overflow-y-auto "
       style="width: 204px;"
     >
       <div
