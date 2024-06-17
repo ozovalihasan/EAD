@@ -6,7 +6,7 @@ Object {
   "baseElement": <body>
     <div>
       <button
-        class="dark:hover:bg-zinc-300 hover:bg-zinc-700 rounded-lg p-2"
+        class="btn-second rounded-lg p-2 "
       >
         <div
           class="stroke-[40] w-10 h-10"
@@ -18,7 +18,7 @@ Object {
   </body>,
   "container": <div>
     <button
-      class="dark:hover:bg-zinc-300 hover:bg-zinc-700 rounded-lg p-2"
+      class="btn-second rounded-lg p-2 "
     >
       <div
         class="stroke-[40] w-10 h-10"

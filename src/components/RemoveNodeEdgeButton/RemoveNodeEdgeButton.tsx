@@ -25,11 +25,11 @@ export const RemoveNodeEdgeButton = () => {
   }
 
   return (
-      <button className='dark:hover:bg-zinc-300 hover:bg-zinc-700 rounded-lg p-2' onClick={handleClick} >
+      <button className='btn-second rounded-lg p-2 ' onClick={handleClick} >
         <div className="stroke-[40] w-10 h-10">
           <Trash />
         </div>
-      </button>      
+      </button>
 
   )
 }

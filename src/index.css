@@ -9,11 +9,11 @@
   details > summary {
     list-style: none;
   }
-  
+
   details > summary::-webkit-details-marker {
     display: none;
   }
-  
+
   input {
     @apply bg-zinc-100 dark:bg-zinc-800
   }
@@ -25,18 +25,19 @@
 
 @layer components {
   .btn-first {
-    @apply flex justify-center items-center 
-    bg-first-500 dark:bg-first-600 hover:bg-first-600 dark:hover:bg-first-600 
-    border-first-500 dark:border-first-700 hover:border-first-600 
-    text-first-100 stroke-first-100 
+    @apply flex justify-center items-center
+    bg-first-500 dark:bg-first-600 hover:bg-first-600 dark:hover:bg-first-500
+    border-first-500 dark:border-first-700 hover:border-first-600
+    text-first-100 stroke-first-100
     border border-solid;
   }
 
   .btn-second {
-    @apply flex justify-center items-center bg-transparent 
-    hover:dark:bg-zinc-700 hover:bg-first-100 text-first-500 
-    dark:text-first-100 stroke-first-500 hover:text-first-600 dark:hover:text-first-50 
-    hover:stroke-first-600 border-first-500 border border-solid;
+    @apply flex justify-center items-center
+    bg-zinc-50 dark:bg-zinc-700 hover:bg-zinc-100 hover:dark:bg-zinc-600
+    text-first-500   dark:text-first-100   hover:text-first-600   dark:hover:text-first-50
+    stroke-first-500 dark:stroke-first-100 hover:stroke-first-600 dark:hover:stroke-first-50
+    border-first-500 border border-solid ;
   }
 
   .btn-third {
@@ -49,9 +50,9 @@
 
   .custom-select-options {
     @apply bg-zinc-100 dark:bg-zinc-700 rounded-md border border-zinc-800 dark:border-zinc-50 cursor-pointer
-    outline-none 
+    outline-none
   }
-  
+
   .custom-select-options > option {
     @apply hover:bg-zinc-200 hover:text-zinc-700 dark:hover:bg-zinc-300
   }
