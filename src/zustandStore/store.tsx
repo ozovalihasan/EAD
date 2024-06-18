@@ -392,6 +392,7 @@ export const useStore = create(devtools<State>((set, get) => ({
           tables: {},
           nodes: [],
           edges: [],
+          orderedTables: []
         })
       }
 

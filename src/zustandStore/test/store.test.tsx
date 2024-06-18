@@ -518,6 +518,7 @@ describe('store', () => {
       expect(useStore.getState().tables).toEqual({});
       expect(useStore.getState().nodes).toEqual([]);
       expect(useStore.getState().edges).toEqual([]);
+      expect(useStore.getState().orderedTables).toEqual([]);
       
   });
 
