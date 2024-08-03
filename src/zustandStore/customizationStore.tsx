@@ -42,11 +42,11 @@ export const checkLocalStorage = () => {
   }
 
   if(!localStorage.darkModeActive){
-    localStorage.setItem("darkModeActive", JSON.stringify(true));
+    localStorage.setItem("darkModeActive", JSON.stringify(false))
   }else{
-    if (!JSON.parse(localStorage.darkModeActive as string)){
+    if (JSON.parse(localStorage.darkModeActive as string)){
       const rootElement = document.querySelector("div#root")!
-      rootElement.classList.remove("dark");
+      rootElement.classList.add("dark");
     }
   }
 }
@@ -60,7 +60,7 @@ export const useCustomizationStore = create(devtools<CustomizationStoreState>((s
   sidebarVisible: true,
   navbarVisible: true,
   mainColor: JSON.parse(localStorage.mainColor as string) as availableColorsType,
-  darkModeActive: JSON.parse(localStorage.darkModeActive as string) as boolean,
+  darkModeActive: JSON.parse(localStorage.darkModeActive as string) as boolean, 
   changeMainColor: (color: availableColorsType) => {
     setColorVariants(color)
 
@@ -70,7 +70,7 @@ export const useCustomizationStore = create(devtools<CustomizationStoreState>((s
   },
   toggleLocationSidebar: () => {
     const location = get().locationSidebar === LocationSidebar.Left ? LocationSidebar.Right : LocationSidebar.Left;
-
+  
     localStorage.setItem("locationSidebar", JSON.stringify( location) );
 
     set({
@@ -91,9 +91,9 @@ export const useCustomizationStore = create(devtools<CustomizationStoreState>((s
     let widthSidebar
 
     if (get().locationSidebar === LocationSidebar.Left){
-      widthSidebar = e.clientX;
+      widthSidebar = e.clientX; 
     } else {
-      widthSidebar = window.innerWidth - e.clientX;
+      widthSidebar = window.innerWidth - e.clientX; 
     }
 
     localStorage.setItem("widthSidebar", JSON.stringify(widthSidebar) );
