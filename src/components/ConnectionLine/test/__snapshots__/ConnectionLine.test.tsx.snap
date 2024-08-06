@@ -11,7 +11,7 @@ Object {
         >
           <path
             class="custom-animation"
-            d="M10,20 C10,96.25 534,96.25 534,172.5"
+            d="M10,20 C10,NaN NaN,NaN NaN,NaN"
             fill="none"
             stroke-width="1.5"
           />
@@ -39,7 +39,7 @@ Object {
       >
         <path
           class="custom-animation"
-          d="M10,20 C10,96.25 534,96.25 534,172.5"
+          d="M10,20 C10,NaN NaN,NaN NaN,NaN"
           fill="none"
           stroke-width="1.5"
         />

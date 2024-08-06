@@ -1,9 +1,9 @@
 import { ShowEdgeText } from '../ShowEdgeText';
 import { render, screen } from "@testing-library/react";
-import { EdgeTextProps } from 'reactflow';
+import { EdgeTextProps } from '@xyflow/react';
 import React from 'react';
 
-jest.mock('reactflow',  () => ({
+jest.mock('@xyflow/react',  () => ({
   EdgeText: ({
     x, 
     y, 

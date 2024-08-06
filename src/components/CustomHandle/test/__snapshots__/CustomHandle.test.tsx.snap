@@ -10,7 +10,7 @@ Object {
       onMouseDown: 
       MockOnChangeAssociationType handleType:hasMany nodeId:222
       className: 
-      opacity-50 justify-center items-center border-none w-6 h-6 bottom-0 left-1/2
+      opacity-50 justify-center items-center border-none w-6 h-6 bottom-1/2 left-1/2 rounded-full
       type: 
       source
       position: 
@@ -23,7 +23,7 @@ Object {
     onMouseDown: 
     MockOnChangeAssociationType handleType:hasMany nodeId:222
     className: 
-    opacity-50 justify-center items-center border-none w-6 h-6 bottom-0 left-1/2
+    opacity-50 justify-center items-center border-none w-6 h-6 bottom-1/2 left-1/2 rounded-full
     type: 
     source
     position: 

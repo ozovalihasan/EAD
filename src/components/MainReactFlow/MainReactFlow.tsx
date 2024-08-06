@@ -1,11 +1,12 @@
 import { useRef, useCallback, memo, useEffect, useState } from 'react';
-import ReactFlow, {
+import  {
+  ReactFlow,
   ReactFlowProvider,
   Controls,
   EdgeTypes,
   ReactFlowInstance,
   NodeTypes,
-} from 'reactflow';
+} from '@xyflow/react';
 
 import { 
   useStore, 
@@ -73,9 +74,9 @@ export const FlowWithoutProvider = memo(() => {
         return;
       }
 
-      const position: {x: number, y: number} = (reactFlowInstance!).project({
-                                                 x: event.clientX - reactFlowBounds.left,
-                                                 y: event.clientY - reactFlowBounds.top,
+      const position: {x: number, y: number} = (reactFlowInstance!).screenToFlowPosition({
+                                                 x: event.clientX,
+                                                 y: event.clientY,
                                                });
 
       

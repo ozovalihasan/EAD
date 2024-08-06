@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { 
   getBezierPath, 
   Node
-} from 'reactflow';
+} from '@xyflow/react';
 
 import {
   RemoveEdgeButton,

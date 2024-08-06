@@ -1,4 +1,4 @@
-import { Handle, Position } from "reactflow"
+import { Handle, Position } from "@xyflow/react"
 import { useStore } from '@/zustandStore';
 
 export const TargetHandle = ({nodeId} : {nodeId: string}) => {

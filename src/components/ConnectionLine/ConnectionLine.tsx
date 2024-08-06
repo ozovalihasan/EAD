@@ -1,4 +1,4 @@
-import { ConnectionLineComponentProps, getBezierPath, Node } from "reactflow";
+import { ConnectionLineComponentProps, getBezierPath, Node } from "@xyflow/react";
 import { useStore } from '@/zustandStore';
 
 export const ConnectionLine = ({
@@ -8,7 +8,7 @@ export const ConnectionLine = ({
   toX,
   toY,
   toPosition
-}: Omit<ConnectionLineComponentProps, 'connectionLineType' | 'connectionStatus' >) => {
+}: Pick<ConnectionLineComponentProps, 'fromX' | 'fromY' | 'fromPosition' | 'toX' | 'toY' | 'toPosition' >) => {
 
   const associationType = useStore(state => state.associationType)
 
@@ -25,8 +25,8 @@ export const ConnectionLine = ({
         sourceX: fromX,
         sourceY: fromY,
         sourcePosition: fromPosition,
-        targetX: throughNode.position.x + (throughNode.width! / 2),
-        targetY: throughNode.position.y + (throughNode.height! / 2),
+        targetX: throughNode.position.x + (throughNode.measured?.width! / 2),
+        targetY: throughNode.position.y + (throughNode.measured?.height! / 2),
         targetPosition: toPosition,
         curvature: 0.5
       })

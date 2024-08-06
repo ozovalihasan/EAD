@@ -5,11 +5,11 @@ import {
   TargetHandle
 } from "@/components"
 import { ExpandToRight } from "@/icons";
-import { useStore, EntityNodeDataType } from '@/zustandStore';
+import { useStore, EntityNodeType } from '@/zustandStore';
 import { FC, memo, useRef } from "react";
-import { NodeProps, NodeResizeControl, ResizeControlVariant } from "reactflow";
+import { NodeProps, NodeResizeControl, Position } from "@xyflow/react";
 
-export type EntityNodePropsType = FC<Pick<NodeProps<EntityNodeDataType>, "id" | "data" | "selected">> 
+export type EntityNodePropsType = FC<Pick<NodeProps<EntityNodeType>, "id" | "data" | "selected">> 
 
 export const EntityNode: EntityNodePropsType = memo(
   ({id, data, selected}) => {
@@ -47,7 +47,7 @@ export const EntityNode: EntityNodePropsType = memo(
         <TableName nodeId={id} tableId={data.tableId} />
         
         {selected && 
-          <NodeResizeControl style={{border: "none"}} variant={ResizeControlVariant.Line} minWidth={114} >
+          <NodeResizeControl position={Position.Right} style={{border: "none", width: 0, height: 0}} minWidth={114} >
               <div className="fill-first-400 dark:fill-first-500 w-3 h-3 absolute -right-4 top-1/2 -translate-y-1/2 ">
                 <ExpandToRight/>
               </div>

@@ -1,6 +1,6 @@
 import { useStore } from '@/zustandStore';
 import { Trash } from "@/icons";
-import { EdgeChange, NodeChange } from "reactflow";
+import { EdgeChange, NodeChange } from "@xyflow/react";
 
 export const RemoveNodeEdgeButton = () => {
   const nodes = useStore(store => store.nodes)

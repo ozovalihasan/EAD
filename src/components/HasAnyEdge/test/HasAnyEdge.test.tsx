@@ -19,10 +19,6 @@ const nodes: EntityNodeType[] = [
     },
     "width": 138,
     "height": 45,
-    "style": {
-      "width": 138,
-      "height": 45,
-    },
     "selected": false,
   },
   {
@@ -38,10 +34,6 @@ const nodes: EntityNodeType[] = [
     },
     "width": 138,
     "height": 45,
-    "style": {
-      "width": 138,
-      "height": 45,
-    },
     "selected": false,
   },
 ]

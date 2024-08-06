@@ -1,4 +1,4 @@
-import { Handle, Position } from 'reactflow';
+import { Handle, Position } from '@xyflow/react';
 import { CustomEdgeType, useStore } from '@/zustandStore';
 import { memo } from 'react';
 
@@ -16,7 +16,7 @@ export const CustomHandle = memo(({id, nodeId, handleType} : CustomHandleType) =
     
   <Handle
     onMouseDown={() => onChangeAssociationType(handleType, nodeId)}
-    className="opacity-50 justify-center items-center border-none w-6 h-6 bottom-0 left-1/2"
+    className="opacity-50 justify-center items-center border-none w-6 h-6 bottom-1/2 left-1/2 rounded-full"
     type="source"
     position={Position.Bottom}
     id={id}

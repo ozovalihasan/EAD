@@ -10,7 +10,7 @@ export const ToggleOptionalButton = ({edgeId}: ToggleOptionalButtonType) => {
   
   return (
     <button className="btn-first w-6 h-6 border-none rounded-full" onClick={() => toggleOptional(edgeId)} >
-      <div className="stroke-[40] w-3 h-3">
+      <div className="absolute stroke-[40] w-3 h-3">
         <CircleAndLine />
       </div>
     </button>

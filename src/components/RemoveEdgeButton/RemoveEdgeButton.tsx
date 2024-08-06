@@ -19,8 +19,8 @@ export const RemoveEdgeButton = ({edgeId}: RemoveEdgeButtonType) => {
         }
       ]
     )} >
-      <div className="stroke-[40] w-3 h-3">
-        <XMark></XMark>
+      <div className="absolute stroke-[40] w-3 h-3">
+        <XMark />
       </div>
     </button>
   )

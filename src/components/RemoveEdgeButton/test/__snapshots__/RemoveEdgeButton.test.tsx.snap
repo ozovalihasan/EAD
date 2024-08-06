@@ -9,7 +9,7 @@ Object {
         class="btn-first w-6 h-6 border-none rounded-full"
       >
         <div
-          class="stroke-[40] w-3 h-3"
+          class="absolute stroke-[40] w-3 h-3"
         >
           MockXMark
         </div>
@@ -21,7 +21,7 @@ Object {
       class="btn-first w-6 h-6 border-none rounded-full"
     >
       <div
-        class="stroke-[40] w-3 h-3"
+        class="absolute stroke-[40] w-3 h-3"
       >
         MockXMark
       </div>

@@ -11,7 +11,7 @@ import {
   applyNodeChanges,
   applyEdgeChanges,
   NodeRemoveChange,
-} from 'reactflow';
+} from '@xyflow/react';
 
 import { devtools } from 'zustand/middleware'
 import produce from "immer"
@@ -53,25 +53,27 @@ export interface TableValueType {
 
 export type TablesType = Record<string, TableValueType>;
 
-export interface EntityNodeDataType {
+export type EntityNodeDataType = {
   tableId: string,
   name: string,
-}
+};
 
-export type EntityNodeType = Node<EntityNodeDataType> & (typeof entityNodePartial)
+export type EntityNodeType = Node<EntityNodeDataType> & (typeof entityNodePartial);
 
-export interface HasOneEdgeDataType { optional: boolean }
+export type HasOneEdgeDataType = { optional: boolean }; 
 export type HasOneEdgeType = Pick<Edge<HasOneEdgeDataType>, "id" | "source" | "target" | "sourceHandle" | "targetHandle" | "selected"> & Required<Pick<Edge<HasOneEdgeDataType>, "data">> & HasOneEdgePartialType
 
-export interface HasManyEdgeDataType { optional: boolean }
+export type HasManyEdgeDataType = { optional: boolean };
 export type HasManyEdgeType = Pick<Edge<HasManyEdgeDataType>, "id" | "source" | "target" | "sourceHandle" | "targetHandle" | "selected"> & Required<Pick<Edge<HasManyEdgeDataType>, "data">> & HasManyEdgePartialType
 
-export interface ThroughEdgeDataType { throughNodeId: string }
+export type ThroughEdgeDataType = { throughNodeId: string };
 export type ThroughEdgeType = Pick<Edge<ThroughEdgeDataType>, "id" | "source" | "target" | "sourceHandle" | "targetHandle" | "selected"> & Required<Pick<Edge<ThroughEdgeDataType>, "data">> & ThroughEdgePartialType
 
 export type HasAnyEdgeType = HasOneEdgeType | HasManyEdgeType
 export type CustomEdgeType = HasAnyEdgeType | ThroughEdgeType;
 export type  EdgeTypesType = CustomEdgeType["type"];
+export type  EdgeBaseType = Omit<CustomEdgeType, "label" | "type" | "data">;
+
 
 export interface State {
   version: string;
@@ -303,11 +305,11 @@ export const useStore = create(devtools<State>((set, get) => ({
         edges: edges,
       });
     },
-
+    
     onEdgesChange: (changes: EdgeChange[]) => {
 
       set({
-        edges: applyEdgeChanges<HasOneEdgeDataType | HasManyEdgeDataType | ThroughEdgeDataType>(changes, get().edges) as CustomEdgeType[],
+        edges: applyEdgeChanges(changes, get().edges) as CustomEdgeType[],
       });
 
     },
@@ -320,7 +322,7 @@ export const useStore = create(devtools<State>((set, get) => ({
 
     onConnect: (connection: Connection) => {
       const id = get().idCounter
-      const edgeBase: Omit<CustomEdgeType, "label" | "type" | "data"> = {
+      const edgeBase: EdgeBaseType = {
         id: id.toString(),
         source: connection.source!,
         target: connection.target!,

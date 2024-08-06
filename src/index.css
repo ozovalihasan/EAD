@@ -1,5 +1,5 @@
 @import "reset.css";
-@import "reactflow/dist/style.css";
+@import "@xyflow/react/dist/base.css";
 
 @tailwind base;
 @tailwind components;
@@ -58,7 +58,7 @@
   }
 
   .general-border {
-    @apply border-solid border-zinc-400 dark:border-zinc-800
+    @apply border-solid border-zinc-400 dark:border-zinc-600
   }
 
   .association-handle {

@@ -1,4 +1,4 @@
-import { Position, Node } from 'reactflow';
+import { Position, Node } from '@xyflow/react';
 
 interface NodeIntersectionType {
   x: number,

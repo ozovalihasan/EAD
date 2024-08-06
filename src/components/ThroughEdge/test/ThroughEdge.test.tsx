@@ -21,11 +21,7 @@ beforeEach(() => {
             "name": "Physician"
         },
         "width": 138,
-        "height": 45,
-        "style": {
-          "width": 138,
-          "height": 45
-        }
+        "height": 45
       },
       {
           "id": "2",
@@ -41,15 +37,7 @@ beforeEach(() => {
           "width": 138,
           "height": 45,
           "selected": false,
-          "positionAbsolute": {
-              "x": 585,
-              "y": 255
-          },
-          "dragging": false,
-          "style": {
-            "width": 138,
-            "height": 45
-          }
+          "dragging": false
       },
       {
           "id": "3",
@@ -65,14 +53,6 @@ beforeEach(() => {
           "width": 138,
           "height": 45,
           "selected": false,
-          "positionAbsolute": {
-              "x": 720,
-              "y": 150
-          },
-          "style": {
-            "width": 138,
-          "height": 45,
-          },
           "dragging": false
       }
     ]

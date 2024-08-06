@@ -1,4 +1,4 @@
-import { EdgeText } from "reactflow";
+import { EdgeText } from "@xyflow/react";
 import { useCustomizationStore, CustomizationStoreState } from '@/zustandStore/customizationStore';
 
 export interface ShowEdgeTextType {

@@ -3,16 +3,16 @@ import { fireEvent, render, renderHook, screen } from "@testing-library/react";
 import { useStore } from '@/zustandStore';
 import { ReactNode } from 'react';
 
-jest.mock('reactflow',  () => ({
+jest.mock('@xyflow/react',  () => ({
   NodeResizeControl: ({children}: {children: ReactNode}) => (
     <>
       MockNodeResizeControl
       {children}
     </>
   ), 
-  ResizeControlVariant: {
-    Line: "line"
-  }
+  Position: {
+    Right: "right"
+  },
   
 }))
 

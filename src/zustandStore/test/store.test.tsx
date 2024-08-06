@@ -9,7 +9,7 @@ import {
   AttributesType,
   DragDirection
 } from '@/zustandStore';
-import { Connection,Edge, Node } from 'reactflow';
+import { Connection,Edge, Node } from '@xyflow/react';
 import testNodes from './testNodes';
 import testEdges from './testEdges';
 import testTables from './testTables';

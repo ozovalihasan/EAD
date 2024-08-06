@@ -1,7 +1,7 @@
 import { ConnectionLine } from '../ConnectionLine';
 import { render } from "@testing-library/react";
-import { useStore } from '@/zustandStore';
-import { Position } from 'reactflow';
+import { EntityNodeType, useStore } from '@/zustandStore';
+import { Position } from '@xyflow/react';
 
 
 
@@ -42,11 +42,7 @@ describe('<ConnectionLine />', () => {
                 "name": "mockName"
             },
             "width": 138,
-            "height": 45,
-            "style": {
-              "width": 138,
-              "height": 45
-            }
+            "height": 45
           },
         ],
         selectedNodeIdForThrough: "1"

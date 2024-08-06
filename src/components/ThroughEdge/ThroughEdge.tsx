@@ -1,7 +1,7 @@
-import { EdgeProps, getBezierPath, Node, Position } from 'reactflow';
+import { EdgeProps, getBezierPath, Node, Position } from '@xyflow/react';
 import { RemoveEdgeButton } from '@/components';
 import { getEdgeParams, positionToOrient } from '@/utils';
-import { useStore, ThroughEdgeDataType } from '@/zustandStore';
+import { useStore, ThroughEdgeDataType, EdgeBaseType } from '@/zustandStore';
 import { useCustomizationStore } from '@/zustandStore/customizationStore';
 
 export const ThroughEdge = ({
@@ -11,9 +11,8 @@ export const ThroughEdge = ({
   label,
   data,
   selected
-}: Required<Pick<EdgeProps<ThroughEdgeDataType>, "id" | "source" | "target" | "label" | "selected" | "data" >> ) => {
+}: Required<Pick<EdgeProps, "id" | "source" | "target" | "label" | "selected" | "data" >> ) => {
   
-
   const sourceNode: Node | undefined = useStore(store => store.nodes.find( node => node.id === source))
   const throughNode: Node | undefined = useStore(store => store.nodes.find( node => node.id === data.throughNodeId))
   const targetNode: Node | undefined = useStore(store => store.nodes.find( node => node.id === target))

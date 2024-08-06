@@ -9,7 +9,7 @@ Object {
         class="h-full flex-grow relative"
       >
         <div
-          class="react-flow"
+          class="react-flow light"
           data-testid="rf__wrapper"
           style="width: 100%; height: 100%; overflow: hidden; position: relative; z-index: 0;"
         >
@@ -18,22 +18,16 @@ Object {
             style="position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;"
           >
             <div
-              class="react-flow__pane"
+              class="react-flow__pane draggable"
               style="position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;"
             >
               <div
-                class="react-flow__viewport react-flow__container"
+                class="react-flow__viewport xyflow__viewport react-flow__container"
                 style="transform: translate(0px,0px) scale(1);"
               >
-                <svg
-                  class="react-flow__edges react-flow__container"
-                  height="500"
-                  style="z-index: 0;"
-                  width="500"
-                >
-                  <defs />
-                  <g />
-                </svg>
+                <div
+                  class="react-flow__edges"
+                />
                 <div
                   class="react-flow__edgelabel-renderer"
                 />
@@ -41,11 +35,15 @@ Object {
                   class="react-flow__nodes"
                   style="position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;"
                 />
+                <div
+                  class="react-flow__viewport-portal"
+                />
               </div>
             </div>
           </div>
           <div
-            class="react-flow__panel react-flow__controls bottom left"
+            aria-label="React Flow controls"
+            class="react-flow__panel react-flow__controls vertical bottom left"
             data-testid="rf__controls"
             style="pointer-events: all;"
           >
@@ -159,7 +157,7 @@ Object {
       class="h-full flex-grow relative"
     >
       <div
-        class="react-flow"
+        class="react-flow light"
         data-testid="rf__wrapper"
         style="width: 100%; height: 100%; overflow: hidden; position: relative; z-index: 0;"
       >
@@ -168,22 +166,16 @@ Object {
           style="position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;"
         >
           <div
-            class="react-flow__pane"
+            class="react-flow__pane draggable"
             style="position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;"
           >
             <div
-              class="react-flow__viewport react-flow__container"
+              class="react-flow__viewport xyflow__viewport react-flow__container"
               style="transform: translate(0px,0px) scale(1);"
             >
-              <svg
-                class="react-flow__edges react-flow__container"
-                height="500"
-                style="z-index: 0;"
-                width="500"
-              >
-                <defs />
-                <g />
-              </svg>
+              <div
+                class="react-flow__edges"
+              />
               <div
                 class="react-flow__edgelabel-renderer"
               />
@@ -191,11 +183,15 @@ Object {
                 class="react-flow__nodes"
                 style="position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;"
               />
+              <div
+                class="react-flow__viewport-portal"
+              />
             </div>
           </div>
         </div>
         <div
-          class="react-flow__panel react-flow__controls bottom left"
+          aria-label="React Flow controls"
+          class="react-flow__panel react-flow__controls vertical bottom left"
           data-testid="rf__controls"
           style="pointer-events: all;"
         >
