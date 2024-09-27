@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "test": "jest --watch --silent=false --maxWorkers=1",
-    "test:silent": "jest --watch --maxWorkers=1",
-    "test:one": "jest --silent=false --maxWorkers=1 --coverage",
+    "test": "jest --watch --silent=false",
+    "test:silent": "jest --watch",
+    "test:one": "jest --silent=false --coverage",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "eslint:fix": "eslint . --fix"
