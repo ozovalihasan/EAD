@@ -1,25 +1,24 @@
-import create from 'zustand';
 import {
+  applyEdgeChanges,
+  applyNodeChanges,
   Connection,
   Edge,
   EdgeChange,
   Node,
   NodeChange,
-  OnNodesChange,
-  OnEdgesChange,
-  OnConnect,
-  applyNodeChanges,
-  applyEdgeChanges,
   NodeRemoveChange,
+  OnConnect,
+  OnEdgesChange,
+  OnNodesChange,
 } from '@xyflow/react';
+import create from 'zustand';
 
-import { devtools } from 'zustand/middleware'
-import produce from "immer"
-import initialTables from './tables';
-import initialNodes from './nodes';
+import { createOrderedTables, entityNodePartial, getProjectNameFromFile, hasManyEdgePartial, HasManyEdgePartialType, hasOneEdgePartial, HasOneEdgePartialType, throughEdgePartial, ThroughEdgePartialType, update_data } from '@/zustandStore';
+import produce from "immer";
+import { devtools } from 'zustand/middleware';
 import initialEdges from './edges';
-import { HasManyEdgePartialType, HasOneEdgePartialType, ThroughEdgePartialType, update_data } from '@/zustandStore';
-import { createOrderedTables, entityNodePartial, hasManyEdgePartial, hasOneEdgePartial, throughEdgePartial } from '@/zustandStore';
+import initialNodes from './nodes';
+import initialTables from './tables';
 
 export const initialIdCounter = (initialTables: TablesType, initialNodes: Node[], initialEdges: Edge[]): number => {
 
@@ -28,10 +27,10 @@ export const initialIdCounter = (initialTables: TablesType, initialNodes: Node[]
   Object.keys(initialTables).map(( tableId )=> ids = ids.concat( Object.keys(initialTables[tableId].attributes)))
   ids = ids.concat(Object.keys(initialNodes))
   ids = ids.concat(Object.keys(initialEdges))
-
+  
   const integer_ids = ids.map(id => parseInt(id))
   const max = Math.max( ...integer_ids )
-
+  
   return (max + 1)
 }
 
@@ -91,6 +90,7 @@ export interface State {
   mouseOnNodeId: string | null;
   associationType: CustomEdgeType["type"];
   needFitView: boolean,
+  projectName: string;
   onNodeMouseEnter: (_: React.MouseEvent, node: Node) => void;
   onEdgeMouseEnter: (_: React.MouseEvent, edge: Edge) => void;
   onNodesChange: OnNodesChange;
@@ -120,6 +120,7 @@ export interface State {
   moveTable: (draggedTableId: string, tableId: string, dragDirection: DragDirection) => void;
   reorderAllTables: () => void;
   toggleOptional: (edgeId: string) => void;
+  onChangeProjectName: (val: string) => void;
 }
 
 export const useStore = create(devtools<State>((set, get) => ({
@@ -139,6 +140,8 @@ export const useStore = create(devtools<State>((set, get) => ({
     mouseOnEdgeId: null,
     selectedNodeIdForThrough: null,
     needFitView: false,
+    projectName: "",
+
     onConnectStart: (() => {
       set({
         isConnectContinue: true
@@ -452,33 +455,51 @@ export const useStore = create(devtools<State>((set, get) => ({
     },
 
     uploadStore: (event: React.ChangeEvent<HTMLInputElement>) => {
+      
+      const file = event.target.files?.[0];
+      if (!file) {
+        alert("No file selected.");
+        return;
+      }
+      
+      const projectName = getProjectNameFromFile(file);
+      
+      if (!projectName) {
+        
+        alert("It is not detected the name of your file. Please check your file.");
+        return;
+      }
+      
       const fileReader = new FileReader();
-      fileReader.onload = (event) => {
-        let data: State;
+      fileReader.onload = (event: ProgressEvent<FileReader>) => {
+        
         if (event.target && (typeof event.target.result === 'string')){
-          data = JSON.parse(event.target.result) as State;
+          let data: State = JSON.parse(event.target.result) as State;
 
           if (["0.4.0", "0.4.1", "0.4.2", "0.4.3", "0.4.4", "0.4.5", "0.4.6", "0.4.7"].includes(data.version)) {
 
-            set(
-              update_data(data)
-            )
-
+            set( update_data(data) )
             set({
-              needFitView: true
+              needFitView: true,
+              projectName: projectName
             })
+
           } else {
             alert(`The version of your file is v${data.version}. It is not compatible with the version used(v0.4.7).`);
           }
 
-        }else{
+        } else {
           alert("An invalid file is installed. Please check your file.");
         }
-
-
       };
+      
+      fileReader.readAsText(file, 'UTF-8');
+    },
 
-      fileReader.readAsText((event.target.files!)[0], 'UTF-8');
+    onChangeProjectName: (val) => {
+      set({
+        projectName: val
+      })
     }
 
   })

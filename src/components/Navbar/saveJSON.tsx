@@ -1,7 +1,7 @@
-const saveJSON = (data: object, filename= 'EAD.json') => {
+const saveJSON = (data: object, filename: string) => {
   
     let dataNew: object | string = data;
-    const filenameNew = filename;
+    const filenameNew = `${filename || "EAD"}.json`;
   
     if (typeof dataNew === 'object') {
       dataNew = JSON.stringify(dataNew, undefined, 4);

@@ -20,9 +20,6 @@ beforeEach(() => {
     uploadStore: jest.fn()
   })
 
- 
-    
-    
   renderReadyComponent = (
     <Navbar />
   );

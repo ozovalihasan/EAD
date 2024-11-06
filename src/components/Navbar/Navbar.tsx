@@ -2,7 +2,8 @@ import saveJSON from './saveJSON';
 import {
   EADLogo,
   GithubLogo,
-  Settings
+  Settings,
+  ProjectName
 } from "@/components";
 
 import {
@@ -17,6 +18,7 @@ export const Navbar = () => {
   
   const resetStore = useStore(store => store.resetStore)
   const uploadStore = useStore(store => store.uploadStore)
+  const projectName = useStore(store => store.projectName)
 
   const navbarVisible = useCustomizationStore(store => store.navbarVisible)
   const toggleNavbarVisibility = useCustomizationStore(store => store.toggleNavbarVisibility)
@@ -34,9 +36,12 @@ export const Navbar = () => {
               0.4.7
             </div>
           </div>
+          
+          <ProjectName />
+          
           <button
               className="rounded-md p-3 my-1 ml-0 btn-first"
-              onClick={() => saveJSON(useStore.getState())}
+              onClick={() => saveJSON(useStore.getState(), projectName)}
               type="button"
               title="Download EAD"
             >

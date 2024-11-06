@@ -38,3 +38,4 @@ export * from './AddTableButton/AddTableButton';
 export * from './AddAttributeButton/AddAttributeButton';
 export * from './RemoveAttributeButton/RemoveAttributeButton';
 export * from './ReorderAllTablesButton/ReorderAllTablesButton';
+export * from './ProjectName/ProjectName';

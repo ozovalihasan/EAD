@@ -1,62 +1,44 @@
-import { 
-  useStore, 
-  HasManyEdgeType, 
-  HasOneEdgeType, 
-  initialIdCounter, 
-  State, 
-  hasManyEdgePartial, 
-  hasOneEdgePartial,
+import {
   AttributesType,
-  DragDirection
+  DragDirection,
+  EntityNodeType,
+  hasManyEdgePartial,
+  HasManyEdgeType,
+  hasOneEdgePartial,
+  HasOneEdgeType,
+  initialIdCounter,
+  State,
+  useStore,
 } from '@/zustandStore';
-import { Connection,Edge, Node } from '@xyflow/react';
-import testNodes from './testNodes';
+import { Connection, Edge, Node } from '@xyflow/react';
 import testEdges from './testEdges';
+import testNodes from './testNodes';
 import testTables from './testTables';
-import { EntityNodeType } from '@/zustandStore';
-import { update_data } from '../helpers/update_data'
 
-jest.mock('../helpers/update_data',  () => ({
-  update_data: jest.fn((data: State) => data)
-}))
+jest.mock('../helpers/update_data', () => ({
+  update_data: jest.fn((data: State) => data),
+}));
 
-
-let edge: Omit<Edge, "id">;
-
-const fileReader = (uploadedFile: unknown) => (
-  Object.defineProperty(global, 'FileReader', {
-    writable: true,
-    value: jest.fn().mockImplementation(() => ({
-      readAsText: function() { 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        this.onload(
-          uploadedFile
-        )
-      },
-    })),
-  })
-)
+let edge: Omit<Edge, 'id'>;
 
 describe('store', () => {
   it('has a "version" attribute and its value should be "0.4.7" as default', () => {
-      expect(useStore.getState().version).toBe("0.4.7");
+    expect(useStore.getState().version).toBe('0.4.7');
   });
 
   it('has a "idCounter" attribute and its value should exist as default', () => {
-    
-    Object.defineProperty(global, 'initialNodes', testNodes)
-    
+    Object.defineProperty(global, 'initialNodes', testNodes);
+
     useStore.setState({
-      idCounter: initialIdCounter(testTables, testNodes, testEdges)
-    })
-  
+      idCounter: initialIdCounter(testTables, testNodes, testEdges),
+    });
+
     expect(useStore.getState().idCounter).toBe(13);
     expect(useStore.getState().idCounter).toBeTruthy();
-
   });
 
   it('has an "associationType" attribute and its value should be "hasOne" as default', () => {
-    expect(useStore.getState().associationType).toBe("hasOne");
+    expect(useStore.getState().associationType).toBe('hasOne');
   });
 
   it('has a "nodes" attribute and its value should exist as default', () => {
@@ -66,7 +48,7 @@ describe('store', () => {
   it('has a "edges" attribute and its value should exist as default', () => {
     expect(useStore.getState().edges).toBeTruthy();
   });
-  
+
   it('has a "tables" attribute and its value should exist as default', () => {
     expect(useStore.getState().tables).toBeTruthy();
   });
@@ -78,11 +60,11 @@ describe('store', () => {
   it('has a "connectionStartNodeId" attribute and its value should be null', () => {
     expect(useStore.getState().connectionStartNodeId).toBeNull();
   });
-  
+
   it('has an "isConnectContinue" attribute and its value should be false', () => {
     expect(useStore.getState().isConnectContinue).toBeFalsy();
   });
-  
+
   it('has an "isMouseOnNode" attribute and its value should be false', () => {
     expect(useStore.getState().isMouseOnNode).toBeFalsy();
   });
@@ -90,7 +72,7 @@ describe('store', () => {
   it('has an "isMouseOnEdge" attribute and its value should be false', () => {
     expect(useStore.getState().isMouseOnEdge).toBeFalsy();
   });
-  
+
   it('has an "mouseOnNodeId" attribute and its value should be null', () => {
     expect(useStore.getState().mouseOnNodeId).toBeNull();
   });
@@ -98,7 +80,7 @@ describe('store', () => {
   it('has an "mouseOnEdgeId" attribute and its value should be null', () => {
     expect(useStore.getState().mouseOnEdgeId).toBeNull();
   });
-  
+
   it('has an "selectedNodeIdForThrough" attribute and its value should be null', () => {
     expect(useStore.getState().selectedNodeIdForThrough).toBeNull();
   });
@@ -108,147 +90,183 @@ describe('store', () => {
   });
 
   it('has an "onConnectStart" attribute to change isConnectContinue as true', () => {
-    useStore.getState().onConnectStart()
+    useStore.getState().onConnectStart();
     expect(useStore.getState().isConnectContinue).toBe(true);
   });
 
   it('has an "onConnectEnd" attribute to change isConnectContinue as false and selectedNodeIdForThrough as null', () => {
-    useStore.getState().onConnectEnd()
+    useStore.getState().onConnectEnd();
     expect(useStore.getState().isConnectContinue).toBe(false);
     expect(useStore.getState().selectedNodeIdForThrough).toBeNull();
   });
 
   it('has an "onEdgeMouseEnter" attribute to change isMouseOnEdge as true and mouseOnEdgeId as the given edge"s id', () => {
-
-    
     useStore.setState({
-      isConnectContinue: true
+      isConnectContinue: true,
     });
 
-    useStore.getState().onEdgeMouseEnter({} as React.MouseEvent, {id: "111"} as Edge)
+    useStore
+      .getState()
+      .onEdgeMouseEnter({} as React.MouseEvent, { id: '111' } as Edge);
 
     expect(useStore.getState().isMouseOnEdge).toBe(false);
     expect(useStore.getState().mouseOnEdgeId).toBe(null);
 
-
     useStore.setState({
-      isConnectContinue: false
+      isConnectContinue: false,
     });
-    
-    
-    useStore.getState().onEdgeMouseEnter({} as React.MouseEvent, {id: "111"} as Edge)
+
+    useStore
+      .getState()
+      .onEdgeMouseEnter({} as React.MouseEvent, { id: '111' } as Edge);
     expect(useStore.getState().isMouseOnEdge).toBe(true);
-    expect(useStore.getState().mouseOnEdgeId).toBe("111");
+    expect(useStore.getState().mouseOnEdgeId).toBe('111');
   });
 
   it('has an "onEdgeMouseLeave" attribute to change isMouseOnEdge as false and mouseOnEdgeId as null', () => {
     useStore.setState({
       isMouseOnEdge: true,
-      mouseOnEdgeId: "1",
-      isConnectContinue: true
+      mouseOnEdgeId: '1',
+      isConnectContinue: true,
     });
 
-    useStore.getState().onEdgeMouseLeave()
+    useStore.getState().onEdgeMouseLeave();
 
     expect(useStore.getState().isMouseOnEdge).toBe(true);
-    expect(useStore.getState().mouseOnEdgeId).toBe("1");
-    
+    expect(useStore.getState().mouseOnEdgeId).toBe('1');
+
     useStore.setState({
-      isConnectContinue: false
+      isConnectContinue: false,
     });
-    
-    useStore.getState().onEdgeMouseLeave()
+
+    useStore.getState().onEdgeMouseLeave();
 
     expect(useStore.getState().isMouseOnEdge).toBe(false);
     expect(useStore.getState().mouseOnEdgeId).toBe(null);
   });
 
   it('has an "onNodeMouseEnter" attribute to change isMouseOnNode as true and mouseOnNodeId as the given edge"s id', () => {
-    useStore.getState().onNodeMouseEnter({} as React.MouseEvent, {id: "111"} as Node)
+    useStore
+      .getState()
+      .onNodeMouseEnter({} as React.MouseEvent, { id: '111' } as Node);
     expect(useStore.getState().isMouseOnNode).toBe(true);
-    expect(useStore.getState().mouseOnNodeId).toBe("111");
+    expect(useStore.getState().mouseOnNodeId).toBe('111');
   });
 
   it('has an "onNodeMouseLeave" attribute to change isMouseOnNode as false and mouseOnNodeId as null', () => {
-    useStore.getState().onNodeMouseLeave()
+    useStore.getState().onNodeMouseLeave();
     expect(useStore.getState().isMouseOnNode).toBe(false);
     expect(useStore.getState().mouseOnNodeId).toBe(null);
   });
 
-  describe("functions to add/update/delete a table", () => {
-    beforeEach( () => {
+  describe('functions to add/update/delete a table', () => {
+    beforeEach(() => {
       useStore.setState({
         idCounter: 333,
         tables: {
-          "111": {
-            name: "mockOldTablename",
+          '111': {
+            name: 'mockOldTablename',
             attributes: {
-              "222": {
-                name: "mockOldAttributeName",
-                type: "mockOldAttributeType"
-              }
+              '222': {
+                name: 'mockOldAttributeName',
+                type: 'mockOldAttributeType',
+              },
             } as AttributesType,
-            superclassId: ""
+            superclassId: '',
           },
-
-        }
-      })
-    })
+        },
+      });
+    });
 
     it('has an "onTableNameChange" attribute to change a table"s name', () => {
-      expect(useStore.getState().tables["111"].name).not.toBe("mockTableName");
+      expect(useStore.getState().tables['111'].name).not.toBe('mockTableName');
 
-      useStore.getState().onTableNameChange({target: {value: "mockTableName"}} as React.ChangeEvent<HTMLInputElement>, "111")
-      expect(useStore.getState().tables["111"].name).toBe("mockTableName");
+      useStore.getState().onTableNameChange(
+        {
+          target: { value: 'mockTableName' },
+        } as React.ChangeEvent<HTMLInputElement>,
+        '111'
+      );
+      expect(useStore.getState().tables['111'].name).toBe('mockTableName');
     });
 
     it('has an "onAttributeNameChange" attribute to change a attribute"s name', () => {
-      expect(useStore.getState().tables["111"].name).not.toBe("mockAttributeName");
+      expect(useStore.getState().tables['111'].name).not.toBe(
+        'mockAttributeName'
+      );
 
-      useStore.getState().onAttributeNameChange({target: {value: "mockAttributeName"}} as React.ChangeEvent<HTMLInputElement>, "111", "222")
-      expect(useStore.getState().tables["111"].attributes["222"].name).toBe("mockAttributeName");
+      useStore.getState().onAttributeNameChange(
+        {
+          target: { value: 'mockAttributeName' },
+        } as React.ChangeEvent<HTMLInputElement>,
+        '111',
+        '222'
+      );
+      expect(useStore.getState().tables['111'].attributes['222'].name).toBe(
+        'mockAttributeName'
+      );
     });
 
     it('has an "onAttributeTypeChange" attribute to change a attribute"s type', () => {
-      expect(useStore.getState().tables["111"].name).not.toBe("mockAttributeType");
+      expect(useStore.getState().tables['111'].name).not.toBe(
+        'mockAttributeType'
+      );
 
-      useStore.getState().onAttributeTypeChange({target: {value: "mockAttributeType"}} as React.ChangeEvent<HTMLSelectElement>, "111", "222")
-      expect(useStore.getState().tables["111"].attributes["222"].type).toBe("mockAttributeType");
+      useStore.getState().onAttributeTypeChange(
+        {
+          target: { value: 'mockAttributeType' },
+        } as React.ChangeEvent<HTMLSelectElement>,
+        '111',
+        '222'
+      );
+      expect(useStore.getState().tables['111'].attributes['222'].type).toBe(
+        'mockAttributeType'
+      );
     });
 
     it('has an "addTable" attribute to add a table', () => {
-      expect(useStore.getState().tables["333"]).toBeFalsy();
+      expect(useStore.getState().tables['333']).toBeFalsy();
 
-      useStore.getState().addTable()
-      expect(useStore.getState().tables["333"]).toStrictEqual(
-        {name: "", attributes: {}, superclassId: ""}
-      );
-      expect(useStore.getState().orderedTables).toStrictEqual(
-        ["1", "2", "3", "333"]
-      );
+      useStore.getState().addTable();
+      expect(useStore.getState().tables['333']).toStrictEqual({
+        name: '',
+        attributes: {},
+        superclassId: '',
+      });
+      expect(useStore.getState().orderedTables).toStrictEqual([
+        '1',
+        '2',
+        '3',
+        '333',
+      ]);
       expect(useStore.getState().idCounter).toBe(334);
     });
 
     it('has a "changeTableSuperClass" attribute to change the superclass of a table', () => {
-      expect(useStore.getState().tables["111"].superclassId).toBe("");
+      expect(useStore.getState().tables['111'].superclassId).toBe('');
 
-      useStore.getState().changeTableSuperClass({target: {value: "444"}} as React.ChangeEvent<HTMLSelectElement>, "111")
-      expect(useStore.getState().tables["111"].superclassId).toBe("444");
+      useStore
+        .getState()
+        .changeTableSuperClass(
+          { target: { value: '444' } } as React.ChangeEvent<HTMLSelectElement>,
+          '111'
+        );
+      expect(useStore.getState().tables['111'].superclassId).toBe('444');
     });
 
     it('has an "addAttribute" attribute to add an attribute to the given table', () => {
-      expect(useStore.getState().tables["111"].attributes["333"]).toBeFalsy();
+      expect(useStore.getState().tables['111'].attributes['333']).toBeFalsy();
 
-      useStore.getState().addAttribute("111")
-      expect(useStore.getState().tables["111"].attributes["333"]).toBeTruthy();
+      useStore.getState().addAttribute('111');
+      expect(useStore.getState().tables['111'].attributes['333']).toBeTruthy();
       expect(useStore.getState().idCounter).toBe(334);
     });
 
     it('has a "removeAttribute" attribute to remove an attribute from the given table', () => {
-      expect(useStore.getState().tables["111"].attributes["222"]).toBeTruthy();
+      expect(useStore.getState().tables['111'].attributes['222']).toBeTruthy();
 
-      useStore.getState().removeAttribute("111", "222")
-      expect(useStore.getState().tables["111"].attributes["222"]).toBeFalsy();
+      useStore.getState().removeAttribute('111', '222');
+      expect(useStore.getState().tables['111'].attributes['222']).toBeFalsy();
     });
 
     it('has a "removeTable" attribute to remove a table', () => {
@@ -256,362 +274,455 @@ describe('store', () => {
         tables: testTables,
         nodes: testNodes,
         edges: testEdges,
-      })
+      });
 
-      expect(useStore.getState().tables["1"]).toBeTruthy();
+      expect(useStore.getState().tables['1']).toBeTruthy();
       expect(useStore.getState().nodes.length).toBe(3);
       expect(useStore.getState().edges.length).toBe(3);
-      expect(useStore.getState().tables["2"].superclassId).toBe("1");
-      expect(useStore.getState().tables["3"].superclassId).toBe("1");
-      expect(useStore.getState().orderedTables).toStrictEqual(["1", "2", "3"]);
+      expect(useStore.getState().tables['2'].superclassId).toBe('1');
+      expect(useStore.getState().tables['3'].superclassId).toBe('1');
+      expect(useStore.getState().orderedTables).toStrictEqual(['1', '2', '3']);
 
-
-      useStore.getState().removeTable("1")
-      expect(useStore.getState().tables["1"]).toBeFalsy();
+      useStore.getState().removeTable('1');
+      expect(useStore.getState().tables['1']).toBeFalsy();
       expect(useStore.getState().nodes.length).toBe(2);
       expect(useStore.getState().edges.length).toBe(1);
-      expect(useStore.getState().tables["2"].superclassId).toBe("");
-      expect(useStore.getState().tables["3"].superclassId).toBe("");
-      expect(useStore.getState().orderedTables).toStrictEqual(["2", "3"]);
+      expect(useStore.getState().tables['2'].superclassId).toBe('');
+      expect(useStore.getState().tables['3'].superclassId).toBe('');
+      expect(useStore.getState().orderedTables).toStrictEqual(['2', '3']);
     });
 
     it('has an "moveTable" attribute to add an attribute to the given table', () => {
-      expect(useStore.getState().orderedTables).toStrictEqual(["1", "2", "3"]);
+      expect(useStore.getState().orderedTables).toStrictEqual(['1', '2', '3']);
 
-      useStore.getState().moveTable("1", "3", DragDirection.upper)
-      expect(useStore.getState().orderedTables).toStrictEqual(["2", "1", "3"]);
+      useStore.getState().moveTable('1', '3', DragDirection.upper);
+      expect(useStore.getState().orderedTables).toStrictEqual(['2', '1', '3']);
 
-      useStore.getState().moveTable("2", "3", DragDirection.lower)
-      expect(useStore.getState().orderedTables).toStrictEqual(["1", "3", "2"]);
+      useStore.getState().moveTable('2', '3', DragDirection.lower);
+      expect(useStore.getState().orderedTables).toStrictEqual(['1', '3', '2']);
     });
-
-  })
+  });
 
   it('has a "increaseIdCounter" attribute to increase the "idCounter" attribute by one', () => {
     useStore.setState({
       idCounter: 333,
-    })
-    
-    useStore.getState().increaseIdCounter()
+    });
+
+    useStore.getState().increaseIdCounter();
     expect(useStore.getState().idCounter).toBe(334);
   });
 
-  describe("functions to add/update/delete a node", () => {
-    
-    beforeEach( () => {
-      
+  describe('functions to add/update/delete a node', () => {
+    beforeEach(() => {
       useStore.setState({
         idCounter: 333,
         nodes: testNodes,
         edges: testEdges,
-        tables: testTables
-      })
-    })
+        tables: testTables,
+      });
+    });
 
     it('has an "onNodeTableChange" attribute to change the table of the given node', () => {
-    
-      let nodeOnStore: EntityNodeType
-      nodeOnStore = useStore.getState().nodes.find(node => node.id === "4")!
-      expect(nodeOnStore.data.tableId).not.toBe("2");
-      
-      useStore.getState().onNodeTableChange("2", "4")
-      
-      nodeOnStore = (useStore.getState().nodes.find(node => node.id === "4"))!
-      expect(nodeOnStore.data.tableId).toBe("2");
+      let nodeOnStore: EntityNodeType;
+      nodeOnStore = useStore.getState().nodes.find(node => node.id === '4')!;
+      expect(nodeOnStore.data.tableId).not.toBe('2');
+
+      useStore.getState().onNodeTableChange('2', '4');
+
+      nodeOnStore = useStore.getState().nodes.find(node => node.id === '4')!;
+      expect(nodeOnStore.data.tableId).toBe('2');
     });
 
     it('has an "onNodeInputChange" attribute to change the name of the given node', () => {
-    
-      let nodeOnStore: EntityNodeType
-      nodeOnStore = useStore.getState().nodes.find(node => node.id === "4")!
-      expect(nodeOnStore.data.name).not.toBe("mockNodeDataName");
-      
-      useStore.getState().onNodeInputChange({target: {value: "mockNodeDataName"}} as React.ChangeEvent<HTMLInputElement>, "4")
-      
-      nodeOnStore = (useStore.getState().nodes.find(node => node.id === "4"))!
-      expect(nodeOnStore.data.name).toBe("mockNodeDataName");
+      let nodeOnStore: EntityNodeType;
+      nodeOnStore = useStore.getState().nodes.find(node => node.id === '4')!;
+      expect(nodeOnStore.data.name).not.toBe('mockNodeDataName');
+
+      useStore.getState().onNodeInputChange(
+        {
+          target: { value: 'mockNodeDataName' },
+        } as React.ChangeEvent<HTMLInputElement>,
+        '4'
+      );
+
+      nodeOnStore = useStore.getState().nodes.find(node => node.id === '4')!;
+      expect(nodeOnStore.data.name).toBe('mockNodeDataName');
     });
-    
+
     it('has a "addNode" attribute to add a node', () => {
-    
       useStore.setState({
-        nodes: []
-      })
-     
-      let nodeOnStore = (useStore.getState().nodes.find(node => node.id === "4"))
+        nodes: [],
+      });
+
+      let nodeOnStore = useStore.getState().nodes.find(node => node.id === '4');
       expect(nodeOnStore).toBeFalsy();
-      
-      useStore.getState().addNode(testNodes[0])
-      
-      nodeOnStore = (useStore.getState().nodes.find(node => node.id === "4"))
+
+      useStore.getState().addNode(testNodes[0]);
+
+      nodeOnStore = useStore.getState().nodes.find(node => node.id === '4');
       expect(nodeOnStore).toBeTruthy();
     });
 
     it('has a "onMouseEnterThrough" attribute to track the selected through node for the "through" association', () => {
-    
-      useStore.getState().onMouseEnterThrough("4")
-      
-      expect(useStore.getState().selectedNodeIdForThrough).toBe("4");
+      useStore.getState().onMouseEnterThrough('4');
+
+      expect(useStore.getState().selectedNodeIdForThrough).toBe('4');
     });
 
-    describe("some parts are handled by a third party", () => {
+    describe('some parts are handled by a third party', () => {
       it('has a "onNodesChange" attribute to apply changes related to a node', () => {
-    
-        let nodeOnStore = (useStore.getState().nodes.find(node => node.id === "4"))
+        let nodeOnStore = useStore
+          .getState()
+          .nodes.find(node => node.id === '4');
         expect(nodeOnStore).toBeTruthy();
         expect(useStore.getState().edges.length).toBe(3);
-  
-        useStore.getState().onNodesChange([{id: "5", type: "remove"}])
-        
-        nodeOnStore = (useStore.getState().nodes.find(node => node.id === "5"))
+
+        useStore.getState().onNodesChange([{ id: '5', type: 'remove' }]);
+
+        nodeOnStore = useStore.getState().nodes.find(node => node.id === '5');
         expect(nodeOnStore).toBeFalsy();
         expect(useStore.getState().edges.length).toBe(2);
-  
-      });  
-    })
-    
-    
+      });
+    });
   });
 
-  describe("functions to add/delete an edge", () => {
-    beforeEach( () => {
-      
+  describe('functions to add/delete an edge', () => {
+    beforeEach(() => {
       useStore.setState({
         idCounter: 333,
         nodes: testNodes,
         edges: testEdges,
-        tables: testTables
-      })
-    })
-    
+        tables: testTables,
+      });
+    });
+
     it('has an "onEdgesChange" attribute to apply changes related to an edge', () => {
-  
-      let edgeOnStore = (useStore.getState().edges.find(edge => edge.id === "7"))
+      let edgeOnStore = useStore.getState().edges.find(edge => edge.id === '7');
 
       expect(edgeOnStore).toBeTruthy();
 
-      useStore.getState().onEdgesChange([{id: "7", type: "remove"}])
-      
-      edgeOnStore = (useStore.getState().edges.find(edge => edge.id === "7"))
+      useStore.getState().onEdgesChange([{ id: '7', type: 'remove' }]);
+
+      edgeOnStore = useStore.getState().edges.find(edge => edge.id === '7');
 
       expect(edgeOnStore).toBeFalsy();
-
-    });  
+    });
 
     describe('has an "onConnect" attribute to add', () => {
-  
-      beforeEach(()=>{
+      beforeEach(() => {
         useStore.setState({
           idCounter: 333,
-        })
+        });
 
         edge = {
-          source: "111", 
-          target: "222", 
-          sourceHandle: "bottom", 
-          targetHandle: "top"
-        }
-      })
-      
-      it('"hasOne" edge', () => {
-
-        useStore.setState({
-          associationType: "hasOne",
-        })
-        
-        expect(useStore.getState().edges.length).toBe(3);
-
-        useStore.getState().onConnect( edge as Connection)
-
-        expect(useStore.getState().edges.length).toBe(4);
-  
-        const edgeOnStore = (useStore.getState().edges.find(edge => edge.id === "333"))
-  
-        expect(edgeOnStore).toEqual(
-          {
-            ...edge, 
-            id:"333", 
-            label: "has one", 
-            type: "hasOne", 
-            data:{
-              optional: false 
-            }
-          }
-        );  
+          source: '111',
+          target: '222',
+          sourceHandle: 'bottom',
+          targetHandle: 'top',
+        };
       });
-      
-      it('a "hasMany" edge', () => {
 
+      it('"hasOne" edge', () => {
         useStore.setState({
-          associationType: "hasMany",
-        })
-        
+          associationType: 'hasOne',
+        });
 
         expect(useStore.getState().edges.length).toBe(3);
 
-        useStore.getState().onConnect( edge as Connection)
+        useStore.getState().onConnect(edge as Connection);
 
         expect(useStore.getState().edges.length).toBe(4);
-  
-        const edgeOnStore = (useStore.getState().edges.find(edge => edge.id === "333"))
-  
+
+        const edgeOnStore = useStore
+          .getState()
+          .edges.find(edge => edge.id === '333');
+
         expect(edgeOnStore).toEqual({
-                                      ...edge, 
-                                      id:"333", 
-                                      label: "has many", 
-                                      type: "hasMany", 
-                                      data:{
-                                        optional: false
-                                      }
-                                    }
-        );  
+          ...edge,
+          id: '333',
+          label: 'has one',
+          type: 'hasOne',
+          data: {
+            optional: false,
+          },
+        });
+      });
+
+      it('a "hasMany" edge', () => {
+        useStore.setState({
+          associationType: 'hasMany',
+        });
+
+        expect(useStore.getState().edges.length).toBe(3);
+
+        useStore.getState().onConnect(edge as Connection);
+
+        expect(useStore.getState().edges.length).toBe(4);
+
+        const edgeOnStore = useStore
+          .getState()
+          .edges.find(edge => edge.id === '333');
+
+        expect(edgeOnStore).toEqual({
+          ...edge,
+          id: '333',
+          label: 'has many',
+          type: 'hasMany',
+          data: {
+            optional: false,
+          },
+        });
       });
 
       it('a "through" edge', () => {
-
         global.alert = jest.fn();
 
         useStore.setState({
-          associationType: "through",
-        })
+          associationType: 'through',
+        });
 
-        useStore.getState().onConnect( edge as Connection)
+        useStore.getState().onConnect(edge as Connection);
 
-        expect(global.alert).toBeCalledTimes(1)
-        expect(global.alert).toBeCalledWith("It is necessary to select a node to define through association.")
+        expect(global.alert).toBeCalledTimes(1);
+        expect(global.alert).toBeCalledWith(
+          'It is necessary to select a node to define through association.'
+        );
 
         useStore.setState({
-          selectedNodeIdForThrough: "555"
-        })
+          selectedNodeIdForThrough: '555',
+        });
 
         expect(useStore.getState().edges.length).toBe(3);
 
-        useStore.getState().onConnect( edge as Connection)
+        useStore.getState().onConnect(edge as Connection);
 
         expect(useStore.getState().edges.length).toBe(4);
-  
-        const edgeOnStore = (useStore.getState().edges.find(edge => edge.id === "333"))
-  
-        expect(edgeOnStore).toEqual(
-          {...edge, id:"333", label: "through", type: "through", data: {throughNodeId: "555"}}
-        );  
+
+        const edgeOnStore = useStore
+          .getState()
+          .edges.find(edge => edge.id === '333');
+
+        expect(edgeOnStore).toEqual({
+          ...edge,
+          id: '333',
+          label: 'through',
+          type: 'through',
+          data: { throughNodeId: '555' },
+        });
       });
-      
-    });  
-    
+    });
   });
 
   it('has an "onChangeAssociationType" attribute to change the selected association type', () => {
-    
-      useStore.getState().onChangeAssociationType( "hasOne", "666")
-    
-      expect(useStore.getState().associationType).toBe("hasOne");
-      expect(useStore.getState().connectionStartNodeId).toBe("666");
+    useStore.getState().onChangeAssociationType('hasOne', '666');
+
+    expect(useStore.getState().associationType).toBe('hasOne');
+    expect(useStore.getState().connectionStartNodeId).toBe('666');
   });
 
   it('has a "resetStore" attribute to reset the store completely', () => {
-      window.confirm = jest.fn().mockImplementation(() => true)
-    
-      useStore.getState().resetStore()
-    
-      expect(useStore.getState().idCounter).toBe(1);
-      expect(useStore.getState().tables).toEqual({});
-      expect(useStore.getState().nodes).toEqual([]);
-      expect(useStore.getState().edges).toEqual([]);
-      expect(useStore.getState().orderedTables).toEqual([]);
-      
+    window.confirm = jest.fn().mockImplementation(() => true);
+
+    useStore.getState().resetStore();
+
+    expect(useStore.getState().idCounter).toBe(1);
+    expect(useStore.getState().tables).toEqual({});
+    expect(useStore.getState().nodes).toEqual([]);
+    expect(useStore.getState().edges).toEqual([]);
+    expect(useStore.getState().orderedTables).toEqual([]);
   });
 
   it('has a "toggleNeedFitView" attribute to toggle the needFitView attribute', () => {
     expect(useStore.getState().needFitView).toBe(false);
-    
-    useStore.getState().toggleNeedFitView()
-    
+
+    useStore.getState().toggleNeedFitView();
+
     expect(useStore.getState().needFitView).toBe(true);
-    
-    useStore.getState().toggleNeedFitView()
+
+    useStore.getState().toggleNeedFitView();
 
     expect(useStore.getState().needFitView).toBe(false);
   });
 
   describe('has a "toggleOptional" attribute to toggle the attribute "optional" of edges', () => {
-    beforeEach( () => {
-      
+    beforeEach(() => {
       useStore.setState({
         idCounter: 333,
         nodes: testNodes,
         edges: testEdges,
-        tables: testTables
-      })
-    })
+        tables: testTables,
+      });
+    });
 
-    it ("if the edge is a hasManyEdge", () => {  
-      const hasManyEdge = useStore.getState().edges.find(edge => edge.type === hasManyEdgePartial.type) as HasManyEdgeType
+    it('if the edge is a hasManyEdge', () => {
+      const hasManyEdge = useStore
+        .getState()
+        .edges.find(
+          edge => edge.type === hasManyEdgePartial.type
+        ) as HasManyEdgeType;
 
       expect(hasManyEdge.data.optional).toBe(false);
-    
-      useStore.getState().toggleOptional( hasManyEdge.id )
 
-      let hasManyEdgeOnStore = (useStore.getState().edges.find(edge => edge.id === hasManyEdge.id)) as HasManyEdgeType
-      expect(hasManyEdgeOnStore.data.optional).toEqual( true );
+      useStore.getState().toggleOptional(hasManyEdge.id);
 
-      useStore.getState().toggleOptional( hasManyEdgeOnStore.id )
-      hasManyEdgeOnStore = (useStore.getState().edges.find(edge => edge.id === hasManyEdgeOnStore.id)) as HasManyEdgeType
+      let hasManyEdgeOnStore = useStore
+        .getState()
+        .edges.find(edge => edge.id === hasManyEdge.id) as HasManyEdgeType;
+      expect(hasManyEdgeOnStore.data.optional).toEqual(true);
 
-      expect(hasManyEdgeOnStore.data.optional).toEqual( false );
-    }) 
+      useStore.getState().toggleOptional(hasManyEdgeOnStore.id);
+      hasManyEdgeOnStore = useStore
+        .getState()
+        .edges.find(
+          edge => edge.id === hasManyEdgeOnStore.id
+        ) as HasManyEdgeType;
 
-    it ("if the edge is a hasOneEdge", () => {  
-      const hasOneEdge = useStore.getState().edges.find(edge => edge.type === hasOneEdgePartial.type) as HasOneEdgeType
+      expect(hasManyEdgeOnStore.data.optional).toEqual(false);
+    });
+
+    it('if the edge is a hasOneEdge', () => {
+      const hasOneEdge = useStore
+        .getState()
+        .edges.find(
+          edge => edge.type === hasOneEdgePartial.type
+        ) as HasOneEdgeType;
 
       expect(hasOneEdge.data.optional).toBe(false);
-    
-      useStore.getState().toggleOptional( hasOneEdge.id )
 
-      let hasOneEdgeOnStore = (useStore.getState().edges.find(edge => edge.id === hasOneEdge.id)) as HasOneEdgeType
-      expect(hasOneEdgeOnStore.data.optional).toEqual( true );
+      useStore.getState().toggleOptional(hasOneEdge.id);
 
-      useStore.getState().toggleOptional( hasOneEdgeOnStore.id )
-      hasOneEdgeOnStore = (useStore.getState().edges.find(edge => edge.id === hasOneEdgeOnStore.id)) as HasOneEdgeType
+      let hasOneEdgeOnStore = useStore
+        .getState()
+        .edges.find(edge => edge.id === hasOneEdge.id) as HasOneEdgeType;
+      expect(hasOneEdgeOnStore.data.optional).toEqual(true);
 
-      expect(hasOneEdgeOnStore.data.optional).toEqual( false );
-    }) 
+      useStore.getState().toggleOptional(hasOneEdgeOnStore.id);
+      hasOneEdgeOnStore = useStore
+        .getState()
+        .edges.find(edge => edge.id === hasOneEdgeOnStore.id) as HasOneEdgeType;
+
+      expect(hasOneEdgeOnStore.data.optional).toEqual(false);
+    });
   });
 
   describe('has an "uploadStore" attribute to upload an EAD file', () => {
-    
-    it('shows a warning if a correct file is not installed', () => {
+    describe('FileReader.readAsText', () => {
+      const setupReadAsText = (fileContext: string, fileName: string) => {
+        const mockFileReader = {
+          readAsText: jest.fn(),
+        };
 
-      global.alert = jest.fn();
+        Object.defineProperty(global, 'FileReader', {
+          writable: true,
+          value: jest.fn().mockImplementation(() => mockFileReader),
+        });
+        
 
-      fileReader({target: {result: []}})
-      useStore.getState().uploadStore({target: {files: {}}} as React.ChangeEvent<HTMLInputElement>)
-    
-      expect(global.alert).toHaveBeenCalledTimes(1);
-      expect(global.alert).toHaveBeenCalledWith("An invalid file is installed. Please check your file.");
+        global.alert = jest.fn();
 
-    })
+        const file = new File(
+          [fileContext],
+          fileName,
+          { type: 'application/json' }
+        );
+        const fileList = Object.create(FileList.prototype, {
+          0: { value: file, enumerable: true },
+          length: { value: 1, enumerable: true },
+        });
 
-    it('installs the file successfully', () => {
-      fileReader({target: {result: JSON.stringify({version: "0.4.7", idCounter: 1234})}})
-      useStore.getState().uploadStore({target: {files: {}}} as React.ChangeEvent<HTMLInputElement>)
-    
-      expect(useStore.getState().idCounter).toBe(1234);
-      expect(useStore.getState().version).toBe("0.4.7");
-    
-      expect(update_data).toHaveBeenCalledTimes(1);
-    });
+        useStore.getState().uploadStore({
+          target: { files: fileList },
+        } as React.ChangeEvent<HTMLInputElement>);
 
-    it('warns about the file version if it is not compatible with the version used', () => {
-      global.alert = jest.fn();
-
-      fileReader({target: {result: JSON.stringify({version: "0.3.1"})}})
-
-      useStore.getState().uploadStore({target: {files: {}}} as React.ChangeEvent<HTMLInputElement>)
-    
-      expect(global.alert).toHaveBeenCalledTimes(1);
-      expect(global.alert).toHaveBeenCalledWith("The version of your file is v0.3.1. It is not compatible with the version used(v0.4.7).");
-    });
-  });
+        return {mockFileReader};
+      }
+      
+      it('installs the file successfully', () => {
+        const {mockFileReader: fileReader} = setupReadAsText('{version: "0.4.7", idCounter: 1234}', 'EAD.json')
+        
+        expect(fileReader.readAsText).toHaveBeenCalledTimes(1);
+      });
+      
+      it('shows an alert for unknown file name', () => {
+        const {mockFileReader: fileReader} = setupReadAsText('{version: "0.4.7", idCounter: 1234}', 'unknown file name')
+        
+        expect(fileReader.readAsText).toHaveBeenCalledTimes(0);
+        expect(global.alert).toHaveBeenCalledTimes(1);
+        expect(global.alert).toHaveBeenCalledWith('It is not detected the name of your file. Please check your file.');
   
+      });
+
+      
+    });
+
+    describe('FileReader.onload', () => {
+      const setupOnLoad = (content: {version: string, idCounter: number}) => {
+        const mockContent = JSON.stringify(content);
+        global.alert = jest.fn();
+        
+        Object.defineProperty(global, 'FileReader', {
+          writable: true,
+          value: jest.fn().mockImplementation(() => {
+            
+            
+            const mockEvent = {
+              target: {
+                result: mockContent,
+              },
+              type: 'process',
+            };
+            
+            return {
+              readAsText: function(uploadedFile: ProgressEvent<FileReader>) {
+                
+                this.onload(mockEvent as ProgressEvent<FileReader>)
+              },
+            }
+          }),
+        })
+
+
+        const file = new File(
+          [mockContent],
+          'EAD.json',
+          { type: 'application/json' }
+        );
+        const fileList = Object.create(FileList.prototype, {
+          0: { value: file, enumerable: true },
+          length: { value: 1, enumerable: true },
+        });
+
+
+        useStore.getState().uploadStore({
+          target: { files: fileList },
+        } as React.ChangeEvent<HTMLInputElement>);
+
+        return {file};
+      }
+      
+      it('run successfully', async () => {
+        setupOnLoad({version: "0.4.7", idCounter: 1234});
+        
+        expect(useStore.getState().idCounter).toBe(1234);
+        expect(useStore.getState().projectName).toBe("EAD");
+      });
+
+      it('warns about the version if it is not acceptable', async () => {
+        setupOnLoad({version: "0.3.1", idCounter: 1234});
+        
+        expect(global.alert).toHaveBeenCalledTimes(1);
+        expect(global.alert).toHaveBeenCalledWith(
+          'The version of your file is v0.3.1. It is not compatible with the version used(v0.4.7).'
+        );
+      });
+      
+      it('warns about the version if it is not acceptable', () => {
+        // setupOnLoad({version: "0.3.1", idCounter: 1234});
+        
+        expect(global.alert).toHaveBeenCalledTimes(1);
+      });
+
+    });
+
+  });
 });
