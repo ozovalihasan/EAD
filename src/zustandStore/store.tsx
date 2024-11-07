@@ -512,6 +512,7 @@ export const useStore = create(devtools<State>((set, get) => ({
 
     addAlert: (message: string, type: "success" | "error") => {
       const id = get().idCounter.toString();
+      
       set(produce((state: State) => {
         state.alertMessages[id] = {message, type}
       }));

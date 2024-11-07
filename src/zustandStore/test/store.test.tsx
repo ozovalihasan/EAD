@@ -544,6 +544,28 @@ describe('store', () => {
     expect(useStore.getState().needFitView).toBe(false);
   });
 
+  it('has a "addAlert" attribute to show alerts', () => {
+    expect(useStore.getState().alertMessages).toEqual({});
+
+    const expectedId = (useStore.getState().idCounter).toString();
+
+    useStore.getState().addAlert("mock message", "error");
+
+    expect(useStore.getState().alertMessages).toEqual({[expectedId]: {message: "mock message", type: "error"}});
+    
+  });
+
+  it('has a "deleteAlert" attribute to delete an alert', () => {
+    useStore.setState({
+      alertMessages: {"3333": {message: "mock message", type: "error"}},
+    });
+
+    useStore.getState().deleteAlert("3333");
+
+    expect(useStore.getState().alertMessages).toEqual({});
+    
+  });
+
   describe('has a "toggleOptional" attribute to toggle the attribute "optional" of edges', () => {
     beforeEach(() => {
       useStore.setState({
