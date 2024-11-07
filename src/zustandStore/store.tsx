@@ -147,7 +147,7 @@ export const useStore = create(devtools<State>((set, get) => ({
     needFitView: false,
     projectName: "",
 
-    alertMessages: {"test": {message: "test", type: "success"}, "test2": {message: "test", type: "success"}},
+    alertMessages: {},
 
     onConnectStart: (() => {
       set({
