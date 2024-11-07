@@ -16,6 +16,7 @@ Object {
           MockSidebarHandle
           MockMainReactFlow
         </div>
+        AlertContainer
       </div>
     </div>
   </body>,
@@ -31,6 +32,7 @@ Object {
         MockSidebarHandle
         MockMainReactFlow
       </div>
+      AlertContainer
     </div>
   </div>,
   "debug": [Function],
@@ -103,6 +105,7 @@ Object {
           MockSidebarHandle
           MockMainReactFlow
         </div>
+        AlertContainer
       </div>
     </div>
   </body>,
@@ -118,6 +121,7 @@ Object {
         MockSidebarHandle
         MockMainReactFlow
       </div>
+      AlertContainer
     </div>
   </div>,
   "debug": [Function],
@@ -190,6 +194,7 @@ Object {
           MockSidebarHandle
           MockMainReactFlow
         </div>
+        AlertContainer
       </div>
     </div>
   </body>,
@@ -205,6 +210,7 @@ Object {
         MockSidebarHandle
         MockMainReactFlow
       </div>
+      AlertContainer
     </div>
   </div>,
   "debug": [Function],

@@ -73,6 +73,7 @@ export type CustomEdgeType = HasAnyEdgeType | ThroughEdgeType;
 export type  EdgeTypesType = CustomEdgeType["type"];
 export type  EdgeBaseType = Omit<CustomEdgeType, "label" | "type" | "data">;
 
+export type AlertType = {message: string, type: "success" | "error"};
 
 export interface State {
   version: string;
@@ -91,6 +92,7 @@ export interface State {
   associationType: CustomEdgeType["type"];
   needFitView: boolean,
   projectName: string;
+  alertMessages: {[id: string]: AlertType};
   onNodeMouseEnter: (_: React.MouseEvent, node: Node) => void;
   onEdgeMouseEnter: (_: React.MouseEvent, edge: Edge) => void;
   onNodesChange: OnNodesChange;
@@ -121,6 +123,9 @@ export interface State {
   reorderAllTables: () => void;
   toggleOptional: (edgeId: string) => void;
   onChangeProjectName: (val: string) => void;
+  addAlert: (message: string, type: "success" | "error") => void;
+  deleteAlert: (id: string) => void;
+
 }
 
 export const useStore = create(devtools<State>((set, get) => ({
@@ -141,6 +146,8 @@ export const useStore = create(devtools<State>((set, get) => ({
     selectedNodeIdForThrough: null,
     needFitView: false,
     projectName: "",
+
+    alertMessages: {"test": {message: "test", type: "success"}, "test2": {message: "test", type: "success"}},
 
     onConnectStart: (() => {
       set({
@@ -466,6 +473,7 @@ export const useStore = create(devtools<State>((set, get) => ({
       
       if (!projectName) {
         
+        // get().addAlert("It is not detected the name of your file. Please check your file.", "error");
         alert("It is not detected the name of your file. Please check your file.");
         return;
       }
@@ -489,6 +497,7 @@ export const useStore = create(devtools<State>((set, get) => ({
           }
 
         } else {
+
           alert("An invalid file is installed. Please check your file.");
         }
       };
@@ -500,6 +509,22 @@ export const useStore = create(devtools<State>((set, get) => ({
       set({
         projectName: val
       })
+    },
+
+    addAlert: (message: string, type: "success" | "error") => {
+      const id = get().idCounter.toString();
+      set(produce((state: State) => {
+        state.alertMessages[id] = {message, type}
+      }));
+      get().increaseIdCounter();
+    },
+
+    deleteAlert: (id: string) => {
+      
+      set(produce((state: State) => {
+        delete state.alertMessages[id]
+      }))
+
     }
 
   })

@@ -2,12 +2,12 @@ import {
   Sidebar, 
   Navbar,
   SidebarHandle,
-  MainReactFlow
+  MainReactFlow,
+  AlertContainer
 } from "@/components"
 import { LocationSidebar, useCustomizationStore } from '@/zustandStore/customizationStore';
 
 export const App = () => {
-  
   const locationSidebar = useCustomizationStore((state) => state.locationSidebar)
   
   return (
@@ -19,6 +19,7 @@ export const App = () => {
         <SidebarHandle />
         <MainReactFlow />
       </div>
+      <AlertContainer />
     </div>
 
   )

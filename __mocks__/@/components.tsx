@@ -313,3 +313,22 @@ export const ProjectName =(
     </>
   )
 )
+
+export const AlertContainer =(
+  () => (
+    <>
+      AlertContainer
+    </>
+  )
+)
+
+export const Alert =(
+  ({id, message, type}: {id: string, message: string, type: "success" | "error"}) => (
+    <>
+      Alert
+      id: {id}
+      message: {message}
+      type: {type}
+    </>
+  )
+)

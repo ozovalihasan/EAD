@@ -39,6 +39,8 @@ module.exports = {
       third: colors.gray,
       fourth: colors.emerald,
       
+      error: colors.red,
+      success: colors.green,
     },
     fontSize: {
       tiny: '.5rem',
