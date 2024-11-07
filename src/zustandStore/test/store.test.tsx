@@ -606,6 +606,16 @@ describe('store', () => {
   });
 
   describe('has an "uploadStore" attribute to upload an EAD file', () => {
+    let addAlert: jest.Mock;
+
+    beforeEach(() => {
+      addAlert = jest.fn();
+      useStore.setState({
+        addAlert: addAlert
+      });
+    })
+      
+    
     describe('FileReader.readAsText', () => {
       const setupReadAsText = (fileContext: string, fileName: string) => {
         const mockFileReader = {
@@ -644,11 +654,17 @@ describe('store', () => {
       });
       
       it('shows an alert for unknown file name', () => {
+        const addAlert = jest.fn();
+        
+        useStore.setState({
+          addAlert: addAlert
+        });
+        
         const {mockFileReader: fileReader} = setupReadAsText('{version: "0.4.7", idCounter: 1234}', 'unknown file name')
         
         expect(fileReader.readAsText).toHaveBeenCalledTimes(0);
-        expect(global.alert).toHaveBeenCalledTimes(1);
-        expect(global.alert).toHaveBeenCalledWith('It is not detected the name of your file. Please check your file.');
+        expect(addAlert).toHaveBeenCalledTimes(1);
+        expect(addAlert).toHaveBeenCalledWith('It is not detected the name of your file. Please check your file.', 'error');
   
       });
 
@@ -710,18 +726,9 @@ describe('store', () => {
       it('warns about the version if it is not acceptable', async () => {
         setupOnLoad({version: "0.3.1", idCounter: 1234});
         
-        expect(global.alert).toHaveBeenCalledTimes(1);
-        expect(global.alert).toHaveBeenCalledWith(
-          'The version of your file is v0.3.1. It is not compatible with the version used(v0.4.7).'
-        );
+        expect(addAlert).toHaveBeenCalledTimes(1);
+        expect(addAlert).toHaveBeenCalledWith('The version of your file is v0.3.1. It is not compatible with the version used(v0.4.7).', 'error');
       });
-      
-      it('warns about the version if it is not acceptable', () => {
-        // setupOnLoad({version: "0.3.1", idCounter: 1234});
-        
-        expect(global.alert).toHaveBeenCalledTimes(1);
-      });
-
     });
 
   });

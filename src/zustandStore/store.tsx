@@ -473,8 +473,7 @@ export const useStore = create(devtools<State>((set, get) => ({
       
       if (!projectName) {
         
-        // get().addAlert("It is not detected the name of your file. Please check your file.", "error");
-        alert("It is not detected the name of your file. Please check your file.");
+        get().addAlert("It is not detected the name of your file. Please check your file.", "error");
         return;
       }
       
@@ -493,12 +492,12 @@ export const useStore = create(devtools<State>((set, get) => ({
             })
 
           } else {
-            alert(`The version of your file is v${data.version}. It is not compatible with the version used(v0.4.7).`);
+            get().addAlert(`The version of your file is v${data.version}. It is not compatible with the version used(v0.4.7).`, "error");
           }
 
         } else {
 
-          alert("An invalid file is installed. Please check your file.");
+          get().addAlert("An invalid file is installed. Please check your file.", "error");
         }
       };
       
