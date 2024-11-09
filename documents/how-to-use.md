@@ -537,17 +537,29 @@ When the table name of an entity is clicked by the right mouse button, a dropdow
 
 - 'has_one' association can be added by dragging ![has_one](./images/has_one.png) handler and dropping on one of the gray areas.
 - 'has_many' association can be added by dragging ![has_many](./images/has_many.png) handler.
-- ':through' association can be added by dragging ![through](./images/through.png) handler.
+- ':through' association can be added by dragging ![through](./images/through.png) handler. 'has_one :through' and 'has_many :through' are defined automatically.
 
 ![association buttons EAD](./images/association-buttons.png)
 
 ![drop area EAD](./images/drop-area-ead.png)
 
+## How to make associations optional?
+
+Firstly, one association should be selected and then a button, shown when the association is selected, should be clicked.
+
+![association buttons options](./images/association-buttons-optional.png)
+
+![optional associations](./images/optional-associations.png)
+
+NOTE: Only 'has_many' and 'has_one' associations can be optional.
+
 ## How to delete associations?
 
 Firstly, one association should be selected and then 'Delete' key should be pressed or a button, shown when the association is selected, should be clicked.
 
-![selected association EAD](./images/select-association.png)
+![selected association EAD](./images/selected-association.png)
+
+![selected association EAD](./images/entities-without-association.png)
 
 ## How to delete entities?
 
