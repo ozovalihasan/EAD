@@ -1,10 +1,10 @@
 import {  Navbar } from '../Navbar';
 import { render, screen, renderHook, fireEvent } from "@testing-library/react";
 import { useStore } from '@/zustandStore';
-import saveJSON from "../saveJSON"
+import downloadStore from "../downloadStore"
 import { useCustomizationStore } from '@/zustandStore/customizationStore';
 
-jest.mock('../saveJSON',  () => ({
+jest.mock('../downloadStore',  () => ({
   default: jest.fn()
 }))
 
@@ -94,7 +94,7 @@ describe('<Navbar />', () => {
 
       fireEvent.click(downloadButton);
 
-      expect(saveJSON).toHaveBeenCalledTimes(1);
+      expect(downloadStore).toHaveBeenCalledTimes(1);
     });
     
     it('renders a button to upload a EAD', () => {

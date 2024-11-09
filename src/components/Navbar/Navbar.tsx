@@ -1,4 +1,4 @@
-import saveJSON from './saveJSON';
+import downloadStore from './downloadStore';
 import {
   EADLogo,
   GithubLogo,
@@ -41,7 +41,7 @@ export const Navbar = () => {
           
           <button
               className="rounded-md p-3 my-1 ml-0 btn-first"
-              onClick={() => saveJSON(useStore.getState(), projectName)}
+              onClick={() => downloadStore(useStore.getState(), projectName)}
               type="button"
               title="Download EAD"
             >

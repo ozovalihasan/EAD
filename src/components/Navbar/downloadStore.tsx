@@ -1,6 +1,6 @@
 import { State } from "@/zustandStore";
 
-const saveJSON = (data: State, projectName: string) => {
+const downloadStore = (data: State, projectName: string) => {
   const filename = `${projectName || "EAD"}.json`;
   const { version, idCounter, nodes, edges, tables, orderedTables } = data;
   const jsonData = { version, idCounter, nodes, edges, tables, orderedTables };
@@ -18,4 +18,4 @@ const saveJSON = (data: State, projectName: string) => {
   anchor.dispatchEvent(event);
 };
 
-export default saveJSON;
+export default downloadStore;
