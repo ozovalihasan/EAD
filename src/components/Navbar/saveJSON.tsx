@@ -1,21 +1,21 @@
-const saveJSON = (data: object, filename: string) => {
+import { State } from "@/zustandStore";
+
+const saveJSON = (data: State, projectName: string) => {
+  const filename = `${projectName || "EAD"}.json`;
+  const { version, idCounter, nodes, edges, tables, orderedTables } = data;
+  const jsonData = { version, idCounter, nodes, edges, tables, orderedTables };
   
-    let dataNew: object | string = data;
-    const filenameNew = `${filename || "EAD"}.json`;
+  const jsonString = JSON.stringify(jsonData, null, 4);
   
-    if (typeof dataNew === 'object') {
-      dataNew = JSON.stringify(dataNew, undefined, 4);
-    }
+  const blob = new Blob([jsonString], { type: 'application/json' });
+  const event = document.createEvent('MouseEvents');
+  const anchor = document.createElement('a');
   
-    const blob = new Blob([dataNew], { type: 'text/json' });
-    const e = document.createEvent('MouseEvents');
-    const a = document.createElement('a');
-  
-    a.download = filenameNew;
-    a.href = window.URL.createObjectURL(blob);
-    a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    a.dispatchEvent(e);
-  };
-  
-  export default saveJSON;
+  anchor.download = filename;
+  anchor.href = window.URL.createObjectURL(blob);
+  anchor.dataset.downloadurl = ['text/json', anchor.download, anchor.href].join(':');
+  event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+  anchor.dispatchEvent(event);
+};
+
+export default saveJSON;
